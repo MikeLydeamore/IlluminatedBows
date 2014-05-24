@@ -1,16 +1,16 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
-  "version": "${version}",
+  "modid": "insane_IlluminatedBows",
+  "name": "Illuminated Bows",
+  "description": "Light up your world with shootable glowstone!",
+  "version": "0.0.1",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authors": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authors": ["Michael Lydeamore"],
+  "credits": "Wyld on Twitch of the idea, KiwiFails for the texture work",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "dependencies": ["ThermalExpansion"]
 }
 ]
