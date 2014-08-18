@@ -1,0 +1,16 @@
+[
+{
+  "modid": "insane_IlluminatedBows",
+  "name": "Illuminated Bows",
+  "description": "Light up your world with shootable glowstone!",
+  "version": "1.5",
+  "mcversion": "1.7.10",
+  "url": "",
+  "updateUrl": "",
+  "authors": ["Michael Lydeamore"],
+  "credits": "Wyld on Twitch of the idea, KiwiFails for the texture work",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": ["ThermalExpansion"]
+}
+]
