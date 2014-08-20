@@ -1,40 +1,61 @@
 package com.insane.illuminatedbows;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-public class EntityIlluminatedArrow extends EntityThrowable {
+import java.lang.reflect.Field;
+
+public class EntityIlluminatedArrow extends EntityArrow {
 
 	public float strength;
-	public EntityIlluminatedArrow(World par1World) {
+    private static Field f;
+    private static Field g;
+    public boolean blockSpawned;
+
+    public EntityIlluminatedArrow(World par1World) {
 		super(par1World);
+        blockSpawned=false;
 	}
 
-	public EntityIlluminatedArrow(World par1World, EntityLivingBase par3EntityPlayer, float j) {
-		super(par1World, par3EntityPlayer);
+	public EntityIlluminatedArrow(World par1World, EntityLivingBase par3EntityPlayer, EntityLivingBase par4EntityPlayer, float j, float k) {
+		super(par1World, par3EntityPlayer, par4EntityPlayer, j, k);
 		this.strength = j;
+        blockSpawned=false;
 	}
 
 	public EntityIlluminatedArrow(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
+        //f=ReflectionHelper.findField(EntityArrow.class, "inGround");
+        //f.setAccessible(true);
+        blockSpawned=false;
 	}
 
-	@Override
-	protected void onImpact(MovingObjectPosition par1MovingObjectPosition) {
+    public EntityIlluminatedArrow(World par1World, EntityLivingBase par2, float par3) {
+        super(par1World, par2, par3);
+        this.strength=par3;
+        f=ReflectionHelper.findField(EntityArrow.class, "inGround");
+        f.setAccessible(true);
+    }
+
+	protected void setIllumination(MovingObjectPosition par1MovingObjectPosition) {
 		//this.worldObj.setBlock((int)(this.posX), (int)(this.posY), (int)(this.posZ), IlluminatedBows.illuminatedBlockID);
-		if (!this.worldObj.isRemote) {
+		if (!this.worldObj.isRemote && par1MovingObjectPosition != null) {
 			if (par1MovingObjectPosition.entityHit != null)	{
-				par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+				//par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 			}
 			else {
                 int i = par1MovingObjectPosition.blockX;
@@ -72,6 +93,7 @@ public class EntityIlluminatedArrow extends EntityThrowable {
                         this.worldObj.setBlock(i, j, k, IlluminatedBows.illuminatedBlock, meta, 2);
                         //this.worldObj.setBlockMetadataWithNotify(i,j,k,meta,2);
                         this.worldObj.playSoundAtEntity(this, "random.glass", 1.0F, 1.0F);
+                        this.playSound("random.glass", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
                     }
                 }
             }
@@ -89,6 +111,35 @@ public class EntityIlluminatedArrow extends EntityThrowable {
                 world.isSideSolid(x,y,z, ForgeDirection.WEST) || world.isSideSolid(x,y,z, ForgeDirection.NORTH) ||
                 world.doesBlockHaveSolidTopSurface(world, x, y, z) || (world.getBlock(x,y,z) == Blocks.leaves) ||
                 (world.getBlock(x,y,z) == Blocks.glass);
+    }
+
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+
+        try {
+            if (f==null) {
+                f=ReflectionHelper.findField(EntityArrow.class, "inGround", "field_70254_i");
+                f.setAccessible(true);
+            }
+            if (g==null) {
+                g=ReflectionHelper.findField(EntityArrow.class, "inData", "field_70253_h");
+                g.setAccessible(true);
+            }
+            if (!this.worldObj.isRemote && f.getBoolean(this) && !blockSpawned) {
+                //this.worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, IlluminatedBows.illuminatedBlock);
+                //this.setDead();
+                Vec3 vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
+                Vec3 vec3 = Vec3.createVectorHelper(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ);
+                MovingObjectPosition movingobjectposition = this.worldObj.func_147447_a(vec31, vec3, false, true, false);
+                //Block blockHit = this.worldObj.getBlock(movingobjectposition.blockX,movingobjectposition.blockY,movingobjectposition.blockZ);
+                blockSpawned=true;
+                this.setIllumination(movingobjectposition);
+                //this.setDead();
+            }
+        } catch(IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 }

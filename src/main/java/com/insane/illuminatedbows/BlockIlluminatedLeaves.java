@@ -99,4 +99,12 @@ public class BlockIlluminatedLeaves extends BlockLeaves {
     {
         super.dropBlockAsItemWithChance(par1World, par2, par3, par4, par5, 0.7f, par7);
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
+    {
+        return true;
+    }
+
 }

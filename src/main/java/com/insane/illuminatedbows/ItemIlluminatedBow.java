@@ -38,6 +38,12 @@ public class ItemIlluminatedBow extends ItemBow {
             this.iconArray[i] = par1IconRegister.registerIcon("illuminatedbows:"+bowPullIconNameArray[i]);
         }
     }
+
+    @Override
+    public int getItemEnchantability()
+    {
+        return 0;
+    }
 	
 	@Override
     @SideOnly(Side.CLIENT)
@@ -105,7 +111,7 @@ public class ItemIlluminatedBow extends ItemBow {
             }
         	//par2World.spawnEntityInWorld(new EntityIlluminatedArrow(par2World, par3EntityPlayer));
             	par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-            	if (!par3EntityPlayer.capabilities.isCreativeMode||!IlluminatedBows.bowTakesDamage) { 
+            	if (!par3EntityPlayer.capabilities.isCreativeMode||!Config.bowTakesDamage) {
             		par1ItemStack.damageItem(1, par3EntityPlayer);
             		par3EntityPlayer.inventory.consumeInventoryItem(IlluminatedBows.illuminatedArrow);
             	}

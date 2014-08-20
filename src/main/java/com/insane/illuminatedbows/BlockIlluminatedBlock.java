@@ -59,6 +59,11 @@ public class BlockIlluminatedBlock extends Block {
 		return 0;
 	}
 
+    @Override
+    public int getMobilityFlag() {
+        return 1;
+    }
+
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x,y,z);
 		switch (meta) {

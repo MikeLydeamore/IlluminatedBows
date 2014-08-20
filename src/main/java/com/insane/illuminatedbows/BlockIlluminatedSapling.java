@@ -67,7 +67,7 @@ public class BlockIlluminatedSapling extends BlockSapling {
 	public void onUseBonemeal(BonemealEvent event)
 	{
 		if (event.block==IlluminatedBows.illuminatedSapling) {
-			if (boneRand.nextInt(IlluminatedBows.boneMealChance)==0) {
+			if (boneRand.nextInt(Config.boneMealChance)==0) {
 				if (!event.world.isRemote) {
 					this.growTree(event.world, event.x, event.y, event.z);
 				}

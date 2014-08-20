@@ -35,7 +35,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod(modid="insane_IlluminatedBows", name="IlluminatedBows", version="1.5", dependencies="required-after:ThermalExpansion")
+@Mod(modid="insane_IlluminatedBows", name="IlluminatedBows", version="1.5")//, dependencies="required-after:ThermalExpansion")
 public class IlluminatedBows {
 
 	@Mod.Instance("insane_IlluminatedBows")
@@ -46,7 +46,9 @@ public class IlluminatedBows {
 	public static Item illuminatedBow;
 	public static Item illuminatedArrow;
 	public static Item illuminatedGlow;
-	public static Block illuminatedBlock;
+    public static Item illuminatedStick;
+    public static Item inertBow;
+    public static Item inertArrow;
 
 	public static Block illuminatedSapling;
 	public static Block illuminatedLeaf;
@@ -54,48 +56,25 @@ public class IlluminatedBows {
 	public static Block illuminatedLeaves;
 	public static Block illuminatedPlanks;
 	public static Block illuminatedStairs;
+    public static Block illuminatedBlock;
 
-	public static boolean bowTakesDamage;
-	public static int arrowEnergy;
-	public static int bowEnergy;
-	public static int saplingEnergy;
-	public static int arrowLiquidAmount;
-	public static int bowLiquidAmount;
-	public static int saplingLiquidAmount;
-	public static int boneMealChance;
-	
-	public static boolean craftStairs;
 	
 	private static List frontRecipes = new ArrayList();
 
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
-		/*Config */
-		File file = new File(event.getModConfigurationDirectory() + "/IlluminatedBows.txt");
-		try
-		{
-			file.createNewFile();
-		}
-		catch (IOException e)
-		{
-			System.out.println("Could not create configuration file for Minecraft Prayers to Cluckington. Reason:");
-			System.out.println(e);
-		}
-		Configuration config = new Configuration(file);
-		config.load();
-
-		bowTakesDamage = config.get("general", "BowTakesDamage", true).getBoolean(true);
-		arrowEnergy = config.get("general", "ArrowTransposeEnergy", 1000, "Amount of energy (RF) required to make Arrow").getInt(1000);
-		bowEnergy = config.get("general", "BowTransposeEnergy", 8000, "Amount of energy (RF) required to make Bow").getInt(8000);
-		saplingEnergy = config.get("general", "SaplingTransposeEnergy",1000, "Amount of energy (RF) required to make Sapling").getInt(1000);
-		arrowLiquidAmount = config.get("general","ArrowLiquidAmount",250, "Amount (in mB) of Energized Glowstone to create Arrow").getInt(250);
-		bowLiquidAmount = config.get("general","BowLiquidAmount",2000, "Amount (in mB) of Energized Glowstone to create Bow").getInt(2000);
-		saplingLiquidAmount = config.get("general","SaplingLiquidAmount",500, "Amount (in mB) of Energized Glowstone to create Sapling").getInt(500);
-		boneMealChance = config.get("general", "BoneMealChance",3, "Chance for bonemeal to work (1 in n)").getInt(3);
-		craftStairs = config.get("general","CraftStair",true,"Able to craft illuminated stairs").getBoolean(true);
-		config.save();
-		/* End Config */
+        File file = new File(event.getModConfigurationDirectory() + "/IlluminatedBows.txt");
+        try
+        {
+            file.createNewFile();
+        }
+        catch (IOException e)
+        {
+            System.out.println("Could not create configuration file for Minecraft Prayers to Cluckington. Reason:");
+            System.out.println(e);
+        }
+        Config.doConfig(file);
 
 		illuminatedBow = new ItemIlluminatedBow();
 		GameRegistry.registerItem(illuminatedBow, "illuminatedBow");
@@ -139,6 +118,15 @@ public class IlluminatedBows {
 		GameRegistry.registerBlock(illuminatedStairs, "illuminatedStairs");
 		LanguageRegistry.addName(illuminatedStairs, "Illuminated Stairs");
 
+        illuminatedStick = new ItemIlluminatedStick();
+        GameRegistry.registerItem(illuminatedStick, "illuminatedStick");
+
+        inertBow = new ItemInertBow();
+        GameRegistry.registerItem(inertBow, "inertBow");
+
+        inertArrow = new ItemInertArrow();
+        GameRegistry.registerItem(inertArrow, "inertArrow");
+
 	}
 
 	@Mod.EventHandler
@@ -147,22 +135,26 @@ public class IlluminatedBows {
 		
 		ItemStack plankStack = new ItemStack(illuminatedPlanks);
 		GameRegistry.addShapelessRecipe(new ItemStack(illuminatedPlanks, 4), new ItemStack(illuminatedWood));
-		if (craftStairs) {
-			GameRegistry.addRecipe(new ItemStack(illuminatedStairs,4), new Object[] {"  x", " xx", "xxx", 'x', plankStack});
-		}
+	    GameRegistry.addRecipe(new ItemStack(illuminatedStairs,4), new Object[] {"  x", " xx", "xxx", 'x', plankStack});
+        ItemStack stickStack = new ItemStack(illuminatedStick);
+        GameRegistry.addRecipe(new ItemStack(illuminatedStick,4), new Object[]{"x","x", 'x', plankStack});
+        GameRegistry.addRecipe(new ItemStack(inertBow,1), new Object[] {" xy", "x y"," xy", 'x',illuminatedStick,'y',new ItemStack(Items.string)});
+        GameRegistry.addRecipe(new ItemStack(inertArrow), new Object[] {"x","y","z", 'x', Items.flint, 'y', stickStack, 'z', Items.feather});
 		
 		OreDictionary.registerOre("plankWood", illuminatedPlanks);
 		OreDictionary.registerOre("logWood", illuminatedWood);
+        OreDictionary.registerOre("stickWood",illuminatedStick);
+
 		/* Transpose Arrows */
 		if (Loader.isModLoaded("ThermalExpansion")) {
-			addTransposerFillRecipe(new ItemStack(Items.arrow), new ItemStack(illuminatedArrow), new FluidStack(FluidRegistry.getFluid("glowstone"), arrowLiquidAmount),
-					arrowEnergy);
+			addTransposerFillRecipe(new ItemStack(inertArrow), new ItemStack(illuminatedArrow), new FluidStack(FluidRegistry.getFluid("glowstone"), Config.arrowLiquidAmount),
+					Config.arrowEnergy);
 
-			addTransposerFillRecipe(new ItemStack(Items.bow), new ItemStack(illuminatedBow), new FluidStack(FluidRegistry.getFluid("glowstone"), bowLiquidAmount),
-					bowEnergy);
+			addTransposerFillRecipe(new ItemStack(inertBow), new ItemStack(illuminatedBow), new FluidStack(FluidRegistry.getFluid("glowstone"), Config.bowLiquidAmount),
+					Config.bowEnergy);
 			
-			addTransposerFillRecipe(new ItemStack(Blocks.sapling, 1, 0), new ItemStack(illuminatedSapling), new FluidStack(FluidRegistry.getFluid("glowstone"), saplingLiquidAmount),
-					saplingEnergy);
+			addTransposerFillRecipe(new ItemStack(Blocks.sapling, 1, 0), new ItemStack(illuminatedSapling), new FluidStack(FluidRegistry.getFluid("glowstone"), Config.saplingLiquidAmount),
+					Config.saplingEnergy);
 		}
 		
 		
