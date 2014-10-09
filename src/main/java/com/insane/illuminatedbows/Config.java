@@ -22,6 +22,13 @@ public class Config {
 
     public static int boneMealChance;
 
+    public static int glowstonePlankChance;
+    public static int sawmillPlankEnergy;
+
+    public static boolean thermalExpansion;
+
+    public static boolean illuminatedSapling;
+
     public static void doConfig(File file) {
 
         Configuration config = new Configuration(file);
@@ -42,6 +49,14 @@ public class Config {
 
         //Other
         boneMealChance = config.get("General", "BoneMealChance",3, "Chance for bonemeal to work (1 in n)").getInt(3);
+
+        //Planks
+        glowstonePlankChance = config.get("Planks", "GlowstoneChance", 4, "Chance of getting glowstone dust from Sawmilling Illuminated Planks").getInt(4);
+        sawmillPlankEnergy = config.get("Planks", "SawmillEnergyAmount", 1000, "Amount of energy (RF) required to Sawmill Illuminated Planks").getInt(1000);
+
+        thermalExpansion = config.get("Integration","ThermalExpansion",false,"Thermal Expansion Compatability").getBoolean(false);
+
+        illuminatedSapling = config.get("General","IlluminatingSaplingDrop",true,"True = Illuminated Saplings drop from leaves. False = Oak Saplings drop from leaves").getBoolean(true);
 
         config.save();
 

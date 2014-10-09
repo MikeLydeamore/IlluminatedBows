@@ -14,10 +14,11 @@ import org.lwjgl.opengl.GL12;
 @SideOnly(Side.CLIENT)
 public class RenderIlluminatedArrow extends Render {
 
-    private static final ResourceLocation arrowTextures = new ResourceLocation("textures/entity/arrow.png");
+    private static final ResourceLocation arrowTextures = new ResourceLocation("illuminatedbows", "textures/entity/illuminatedarrow.png");
     private static final String __OBFID = "CL_00000978";
 
     /**
+     *  100% Mojang Code.
      * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then
      * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic
      * (Render<T extends Entity) and this method has signature public void func_76986_a(T entity, double d, double d1,

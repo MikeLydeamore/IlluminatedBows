@@ -18,12 +18,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 import java.lang.reflect.Field;
+import java.util.Random;
+
+import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
 
 public class EntityIlluminatedArrow extends EntityArrow {
 
 	public float strength;
     private static Field f;
-    private static Field g;
     public boolean blockSpawned;
 
     public EntityIlluminatedArrow(World par1World) {
@@ -39,23 +41,21 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
 	public EntityIlluminatedArrow(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
-        //f=ReflectionHelper.findField(EntityArrow.class, "inGround");
-        //f.setAccessible(true);
         blockSpawned=false;
 	}
 
     public EntityIlluminatedArrow(World par1World, EntityLivingBase par2, float par3) {
         super(par1World, par2, par3);
         this.strength=par3;
-        f=ReflectionHelper.findField(EntityArrow.class, "inGround");
-        f.setAccessible(true);
     }
 
 	protected void setIllumination(MovingObjectPosition par1MovingObjectPosition) {
-		//this.worldObj.setBlock((int)(this.posX), (int)(this.posY), (int)(this.posZ), IlluminatedBows.illuminatedBlockID);
+            for (int count = 0; count < 20; count++) {
+                this.worldObj.spawnParticle("magicCrit", this.posX, this.posY+2, this.posZ, 255, 213, 0);
+            }
+
 		if (!this.worldObj.isRemote && par1MovingObjectPosition != null) {
 			if (par1MovingObjectPosition.entityHit != null)	{
-				//par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
 			}
 			else {
                 int i = par1MovingObjectPosition.blockX;
@@ -90,14 +90,13 @@ public class EntityIlluminatedArrow extends EntityArrow {
                     }
 
                     if (this.worldObj.isAirBlock(i, j, k)) {
-                        this.worldObj.setBlock(i, j, k, IlluminatedBows.illuminatedBlock, meta, 2);
-                        //this.worldObj.setBlockMetadataWithNotify(i,j,k,meta,2);
-                        this.worldObj.playSoundAtEntity(this, "random.glass", 1.0F, 1.0F);
-                        this.playSound("random.glass", 1.0F, 1.2F / (this.rand.nextFloat() * 0.2F + 0.9F));
+                        this.worldObj.setBlock(i, j, k, IlluminatedBlocks.illuminatedBlock, meta, 2);
+                        this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
+                        this.setDead();
                     }
                 }
             }
-			this.setDead();
+			//this.setDead();
 		}
 	}
 	/*@Override
@@ -116,17 +115,13 @@ public class EntityIlluminatedArrow extends EntityArrow {
     @Override
     public void onUpdate() {
         super.onUpdate();
-
+        this.worldObj.spawnParticle("reddust",this.posX, this.posY, this.posZ, 255, 213, 0);
         try {
             if (f==null) {
                 f=ReflectionHelper.findField(EntityArrow.class, "inGround", "field_70254_i");
                 f.setAccessible(true);
             }
-            if (g==null) {
-                g=ReflectionHelper.findField(EntityArrow.class, "inData", "field_70253_h");
-                g.setAccessible(true);
-            }
-            if (!this.worldObj.isRemote && f.getBoolean(this) && !blockSpawned) {
+            if (f.getBoolean(this) && !blockSpawned) {
                 //this.worldObj.setBlock((int) this.posX, (int) this.posY, (int) this.posZ, IlluminatedBows.illuminatedBlock);
                 //this.setDead();
                 Vec3 vec31 = Vec3.createVectorHelper(this.posX, this.posY, this.posZ);
@@ -135,6 +130,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
                 //Block blockHit = this.worldObj.getBlock(movingobjectposition.blockX,movingobjectposition.blockY,movingobjectposition.blockZ);
                 blockSpawned=true;
                 this.setIllumination(movingobjectposition);
+
                 //this.setDead();
             }
         } catch(IllegalAccessException e) {

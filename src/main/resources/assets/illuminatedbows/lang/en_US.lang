@@ -1,0 +1,25 @@
+item.illuminatedBow.name=Illuminating Bow
+item.inertBow.name=Inert Bow
+item.illuminatedArrow.name=Illuminating Arrow
+item.inertArrow.name=Inert Arrow
+item.illuminatedStick.name=Illuminated Stick
+tile.illuminatedBlock.name=Illumination
+tile.illuminatedBlock.broken.name=Illumination
+tile.illuminatedBlock.left.name=Illumination
+tile.illuminatedBlock.right.name=Illumination
+tile.illuminatedItemBlock.name=Illumination
+tile.illuminatedSapling.name=Illuminating Sapling
+tile.illuminatedWood.name=Illuminating Wood
+tile.illuminatedLeaves.name=Illuminating Leaves
+tile.illuminatedPlanks.name=Illuminating Planks
+tile.illuminatedStairs.name=Illuminating Stairs
+tile.illuminatedSlab.halfSlab.name=Illuminating Slab
+tile.illuminatedSlab.doubleSlab.name=Illuminating Slab
+tile.illuminatedSlab.topSlab.name=Illuminating Slab
+tile.illuminatedSlab.name=Illuminating Slab
+tc.research_category.illuminatedBows=Illuminating Bows
+tc.research_name.insane_IlluminatedBowsmagicBow=Vis Infused Illuminated Bow
+tc.research_text.insane_IlluminatedBowsmagicBow=Lighting up your world. Magically.
+
+tc.magicBow.descriptionPage=Until now, you have been shooting your illuminations like everyone else. Never did it occur to you that maybe some magic should be involved.<BR><BR>It seems as though a little bit of magic can go a long way. A touch of everburning flame and everlasting fuel means the Vis Infused Illuminated Bow can create Illuminations using nothing but a little bit of magic from the wand you're holding. No more wasted glowstone! Neat!
+item.magicBow.name=Vis Infused Illuminated Bow
