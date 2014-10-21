@@ -1,11 +1,5 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
-import com.insane.illuminatedbows.Config;
-import com.insane.illuminatedbows.EntityIlluminatedArrow;
-import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
-import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
-import com.insane.illuminatedbows.items.IlluminatedItems;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +14,10 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandFocus;
 
+import com.insane.illuminatedbows.EntityIlluminatedArrow;
+import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
+import com.insane.illuminatedbows.items.IlluminatedItems;
+
 public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	public ItemFocusIlluminating()
@@ -30,17 +28,17 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	@Override
 	public int getFocusColor() {
-		return 0;
+		return 0xFFFF00;
 	}
 
 	@Override
 	public IIcon getFocusDepthLayerIcon() {
-		return IlluminatedItems.illuminatedArrow.getIconFromDamage(0);
+	    return null;
 	}
 
 	@Override
 	public IIcon getOrnament() {
-		return IlluminatedItems.illuminatedStick.getIconFromDamage(0);
+	    return null;
 	}
 
 	@Override
@@ -76,7 +74,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	@Override
 	public void onUsingFocusTick(ItemStack itemstack, EntityPlayer player,
 			int count) {
-
+	    System.out.println("test");
 	}
 
 	@Override
@@ -108,6 +106,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 			{
 				f = 1.0F;
 			}
+			
 			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(world, player, f*2.0F);
 			arrow.setDamage(0);
 			arrow.setBlockToSet(TCBlocks.blockMagicalIllumination);
