@@ -74,7 +74,6 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	@Override
 	public void onUsingFocusTick(ItemStack itemstack, EntityPlayer player,
 			int count) {
-	    System.out.println("test");
 	}
 
 	@Override
