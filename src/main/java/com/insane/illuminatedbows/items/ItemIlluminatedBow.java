@@ -3,6 +3,7 @@ package com.insane.illuminatedbows.items;
 import com.insane.illuminatedbows.Config;
 import com.insane.illuminatedbows.EntityIlluminatedArrow;
 import com.insane.illuminatedbows.IlluminatedBows;
+import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -114,11 +115,12 @@ public class ItemIlluminatedBow extends ItemBow {
             }
             EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(par2World, par3EntityPlayer, f*2.0F);
             arrow.setDamage(0);
+            arrow.setBlockToSet(IlluminatedBlocks.illuminatedBlock);
             par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
-            if (!par3EntityPlayer.capabilities.isCreativeMode||!Config.bowTakesDamage) {
+            if (Config.bowTakesDamage)
             	par1ItemStack.damageItem(1, par3EntityPlayer);
+            if (!par3EntityPlayer.capabilities.isCreativeMode)
             	par3EntityPlayer.inventory.consumeInventoryItem(IlluminatedItems.illuminatedArrow);
-            }
             if (!par2World.isRemote) {
                 par2World.spawnEntityInWorld(arrow);
             }

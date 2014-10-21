@@ -23,3 +23,4 @@ tc.research_text.insane_IlluminatedBowsmagicBow=Lighting up your world. Magicall
 
 tc.magicBow.descriptionPage=Until now, you have been shooting your illuminations like everyone else. Never did it occur to you that maybe some magic should be involved.<BR><BR>It seems as though a little bit of magic can go a long way. A touch of everburning flame and everlasting fuel means the Vis Infused Illuminated Bow can create Illuminations using nothing but a little bit of magic from the wand you're holding. No more wasted glowstone! Neat!
 item.magicBow.name=Vis Infused Illuminated Bow
+tile.illuminatedMagicBlock.name=Illumination

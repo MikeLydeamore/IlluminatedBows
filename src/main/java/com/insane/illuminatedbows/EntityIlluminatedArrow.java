@@ -27,6 +27,9 @@ public class EntityIlluminatedArrow extends EntityArrow {
 	public float strength;
     private static Field f;
     public boolean blockSpawned;
+    private Block blockToSpawn;
+    public boolean deadOnLand=false;
+    public boolean gravity=true;
 
     public EntityIlluminatedArrow(World par1World) {
 		super(par1World);
@@ -90,9 +93,18 @@ public class EntityIlluminatedArrow extends EntityArrow {
                     }
 
                     if (this.worldObj.isAirBlock(i, j, k)) {
-                        this.worldObj.setBlock(i, j, k, IlluminatedBlocks.illuminatedBlock, meta, 2);
+                    	if (blockToSpawn == null)
+                    	{
+                    		blockToSpawn = IlluminatedBlocks.illuminatedBlock;
+                    	}
+                        this.worldObj.setBlock(i, j, k, blockToSpawn, meta, 2);
                         this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
                         this.setDead();
+                    }
+                    else
+                    {
+                    	if (deadOnLand==true)
+                    		this.setDead();
                     }
                 }
             }
@@ -104,6 +116,22 @@ public class EntityIlluminatedArrow extends EntityArrow {
 		System.out.println(-0.97F*this.strength+1.0F);
 		return -0.97F*this.strength+1.0F;
 	}*/
+	
+	public void setBlockToSet(Block block)
+	{
+		blockToSpawn = block;
+	}
+	
+	public void setDeadOnLand(boolean status)
+	{
+		deadOnLand=status;
+	}
+	
+	public void setGravity(boolean status)
+	{
+		gravity=status;
+	}
+	
 
     public boolean canPlaceBlockAt(World world, int x, int y, int z) {
         return world.isSideSolid(x,y,z, ForgeDirection.SOUTH) || world.isSideSolid(x,y,z, ForgeDirection.EAST) ||

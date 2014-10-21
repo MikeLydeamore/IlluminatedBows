@@ -15,6 +15,7 @@ import com.insane.illuminatedbows.blocks.BlockIlluminatedSlab;
 import com.insane.illuminatedbows.blocks.BlockIlluminatedStairs;
 import com.insane.illuminatedbows.blocks.BlockIlluminatedWood;
 import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
+import com.insane.illuminatedbows.items.IlluminatedItems;
 import com.insane.illuminatedbows.items.ItemBlockSlab;
 import com.insane.illuminatedbows.items.ItemIlluminatedArrow;
 import com.insane.illuminatedbows.items.ItemIlluminatedBlock;
@@ -82,6 +83,7 @@ public class IlluminatedBows {
         Config.doConfig(file);
 
 		IlluminatedBlocks.preInit();
+		IlluminatedItems.preInit();
         
         if (Loader.isModLoaded("Thaumcraft"))
         {
