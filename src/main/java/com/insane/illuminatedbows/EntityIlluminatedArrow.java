@@ -30,26 +30,31 @@ public class EntityIlluminatedArrow extends EntityArrow {
     private Block blockToSpawn;
     public boolean deadOnLand=false;
     public boolean gravity=true;
+    private float initYaw;
 
     public EntityIlluminatedArrow(World par1World) {
 		super(par1World);
         blockSpawned=false;
+        initYaw = this.rotationYaw;
 	}
 
 	public EntityIlluminatedArrow(World par1World, EntityLivingBase par3EntityPlayer, EntityLivingBase par4EntityPlayer, float j, float k) {
 		super(par1World, par3EntityPlayer, par4EntityPlayer, j, k);
 		this.strength = j;
         blockSpawned=false;
+        initYaw = this.rotationYaw;
 	}
 
 	public EntityIlluminatedArrow(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
         blockSpawned=false;
+        initYaw = this.rotationYaw;
 	}
 
     public EntityIlluminatedArrow(World par1World, EntityLivingBase par2, float par3) {
         super(par1World, par2, par3);
         this.strength=par3;
+        initYaw = this.rotationYaw;
     }
 
 	protected void setIllumination(MovingObjectPosition par1MovingObjectPosition) {
@@ -143,6 +148,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
     @Override
     public void onUpdate() {
         super.onUpdate();
+        //this.rotationYaw=initYaw;
         this.worldObj.spawnParticle("reddust",this.posX, this.posY, this.posZ, 255, 213, 0);
         try {
             if (f==null) {

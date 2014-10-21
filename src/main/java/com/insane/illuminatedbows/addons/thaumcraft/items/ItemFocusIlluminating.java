@@ -1,18 +1,21 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandFocus;
+import thaumcraft.common.config.Config;
 
 import com.insane.illuminatedbows.EntityIlluminatedArrow;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
@@ -45,6 +48,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	public WandFocusAnimation getAnimation() {
 		return WandFocusAnimation.CHARGE;
 	}
+	
 
 	@Override
 	public AspectList getVisCost() {
@@ -106,7 +110,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 				f = 1.0F;
 			}
 			
-			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(world, player, f*2.0F);
+			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(world, player, 2.0F*f);
 			arrow.setDamage(0);
 			arrow.setBlockToSet(TCBlocks.blockMagicalIllumination);
 			arrow.setDeadOnLand(true);
@@ -136,7 +140,17 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	@Override
 	public boolean acceptsEnchant(int id) {
-		return false;
+		return id==Config.enchFrugal.effectId;
+	}
+	
+	@Override
+	public int getItemEnchantability() {
+		return 5;
+	}
+	
+	@Override
+	public boolean isItemTool(ItemStack stack) {
+		return true;
 	}
 
 }

@@ -81,7 +81,7 @@ public class ItemMagicBow extends ItemIlluminatedBow implements IRepairable {
 			{
 				f = 1.0F;
 			}
-			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(par2World, par3EntityPlayer, f*2.0F);
+			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(par2World, par3EntityPlayer, 2.0F*f);
 			arrow.setDamage(0);
 			arrow.setBlockToSet(TCBlocks.blockMagicalIllumination);
 			arrow.setDeadOnLand(true);
