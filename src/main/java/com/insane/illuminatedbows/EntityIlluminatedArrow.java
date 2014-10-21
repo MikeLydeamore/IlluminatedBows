@@ -92,7 +92,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
                             ++i;
                     }
 
-                    if (this.worldObj.isAirBlock(i, j, k)) {
+                    if (this.worldObj.isAirBlock(i, j, k) || this.worldObj.getBlock(i, j, k).isReplaceable(worldObj, i, j, k)) {
                     	if (blockToSpawn == null)
                     	{
                     		blockToSpawn = IlluminatedBlocks.illuminatedBlock;
