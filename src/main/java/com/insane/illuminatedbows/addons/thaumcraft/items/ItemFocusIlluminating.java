@@ -1,5 +1,6 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -18,8 +19,10 @@ import thaumcraft.api.wands.IWandFocus;
 import thaumcraft.common.config.Config;
 
 import com.insane.illuminatedbows.EntityIlluminatedArrow;
-import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.items.IlluminatedItems;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFocusIlluminating extends Item implements IWandFocus {
 
@@ -27,6 +30,13 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	{
 		super();
 		this.setUnlocalizedName("focusIlluminating");
+		this.setMaxStackSize(1);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerIcons(IIconRegister par1IconRegister) {
+		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_illuminating");
 	}
 
 	@Override
@@ -36,19 +46,19 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	@Override
 	public IIcon getFocusDepthLayerIcon() {
-	    return null;
+		return null;
 	}
 
 	@Override
 	public IIcon getOrnament() {
-	    return null;
+		return null;
 	}
 
 	@Override
 	public WandFocusAnimation getAnimation() {
 		return WandFocusAnimation.CHARGE;
 	}
-	
+
 
 	@Override
 	public AspectList getVisCost() {
@@ -109,11 +119,11 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 			{
 				f = 1.0F;
 			}
-			
+
 			EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(world, player, 2.0F*f);
 			arrow.setDamage(0);
-			arrow.setBlockToSet(TCBlocks.blockMagicalIllumination);
 			arrow.setDeadOnLand(true);
+			arrow.isMagic(true);
 			world.playSoundAtEntity(player, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
 
 			if (!world.isRemote) {
@@ -142,12 +152,12 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	public boolean acceptsEnchant(int id) {
 		return id==Config.enchFrugal.effectId;
 	}
-	
+
 	@Override
 	public int getItemEnchantability() {
 		return 5;
 	}
-	
+
 	@Override
 	public boolean isItemTool(ItemStack stack) {
 		return true;

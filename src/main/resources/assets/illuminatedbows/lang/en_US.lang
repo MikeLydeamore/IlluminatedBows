@@ -21,6 +21,10 @@ tc.research_category.illuminatedBows=Illuminating Bows
 tc.research_name.insane_IlluminatedBowsmagicBow=Vis Infused Illuminated Bow
 tc.research_text.insane_IlluminatedBowsmagicBow=Lighting up your world. Magically.
 
-tc.magicBow.descriptionPage=Until now, you have been shooting your illuminations like everyone else. Never did it occur to you that maybe some magic should be involved.<BR><BR>It seems as though a little bit of magic can go a long way. A touch of everburning flame and everlasting fuel means the Vis Infused Illuminated Bow can create Illuminations using nothing but a little bit of magic from the wand you're holding. No more wasted glowstone! Neat!
+tc.magicBow.descriptionPage=Until now, you have been shooting your illuminations like everyone else. Never did it occur to you that maybe some magic should be involved.<BR><BR>It seems as though a little bit of magic can go a long way. A touch of everburning flame and everlasting fuel means the Vis Infused Illuminated Bow can create Illuminations using nothing but a little bit of magic from the wand you're holding. No more wasted glowstone! <BR><BR>Unfortunately, the magic seems to have turned your Illuminations purple. <BR>Magic giveth, magic taketh away.
 item.magicBow.name=Vis Infused Illuminated Bow
 tile.illuminatedMagicBlock.name=Illumination
+tc.focusIlluminating.descriptionPage=You know what's annoying? Having to carry around 500 different tools to do your jobs. Luckily, with a bit of thought, you've reduced that number to just 499.<BR><BR>The Illuminating Focus works just like an Illuminated Bow, but in focus form. It's very magical, and you think it might also hold a little bit more magic.<BR><BR>As to where the arrows come from, you don't want to think about.
+item.focusIlluminating.name=Illuminating Focus
+tc.research_name.insane_IlluminatedBowsilluminatingFocus=Illuminating Focus
+tc.research_text.insane_IlluminatedBowsilluminatingFocus=Illuminating!

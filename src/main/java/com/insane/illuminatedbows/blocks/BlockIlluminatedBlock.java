@@ -1,5 +1,6 @@
 package com.insane.illuminatedbows.blocks;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -19,7 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockIlluminatedBlock extends Block {
-
+	private IIcon[] iconArray;
 	public BlockIlluminatedBlock() {
 		super(Material.glass);
 		this.setBlockName("illuminatedBlock");
@@ -29,44 +30,92 @@ public class BlockIlluminatedBlock extends Block {
 		this.setStepSound(Block.soundTypeGlass);
 	}
 
-    public String getItemStackDisplayName() {
-        return "Illumination";
-    }
+	public String getItemStackDisplayName() {
+		return "Illumination";
+	}
 
 	@SideOnly(Side.CLIENT)
-    @Override
+	@Override
 	public void registerBlockIcons(IIconRegister par1IconRegister)
 	{
 		this.blockIcon = par1IconRegister.registerIcon("illuminatedbows:illuminatedblock");
+		this.iconArray = new IIcon[2];
+		iconArray[0] = this.blockIcon;
+		iconArray[1] = par1IconRegister.registerIcon("illuminatedbows:illumination_vis");
 	}
 
 	@SideOnly(Side.CLIENT)
-    @Override
+	@Override
 	public IIcon getIcon(int par1, int par2) {
-		return this.blockIcon;
+		if (par2 >=6)
+			return this.iconArray[1];
+		else
+			return this.iconArray[0];
 	}
 
 	@SideOnly(Side.CLIENT)
-    @Override
+	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
-		for (int i=0; i<6; i++) {
+		for (int i=0; i<12; i++) {
 			par3List.add(new ItemStack(par1, 1, i));
 		}
 
 	}
 
+	/*@SideOnly(Side.CLIENT)
+	@Override
+	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+	{
+		//if (rand.nextInt(20)==0)
+		//{
+			int meta = world.getBlockMetadata(x, y, z);
+			if (meta>=6)
+			{
+				switch(meta) {
+				case 6: {
+					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+0.8f,z+rand.nextFloat(), 0d,0d,0d);
+					break;
+				}
+				case 7: {
+					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+0.2f,z+rand.nextFloat(), 0d,0d,0d);
+					break;
+				}
+				case 8: {
+					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+rand.nextFloat(),z+0.8, 0d,0d,0d);
+					break;
+				}
+				case 9: {
+					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+rand.nextFloat(),z+0.2, 0d,0d,0d);
+					break;
+				}
+				case 10: {
+					world.spawnParticle("enchantmenttable", x+0.8,y+rand.nextFloat(),z+rand.nextFloat(), 0d,0d,0d);
+					break;
+				}
+				case 11: {
+					world.spawnParticle("enchantmenttable", x+0.2,y+rand.nextFloat(),z+rand.nextFloat(), 0d,0d,0d);
+					break;
+				}
+				
+					
+				}
+				
+			}
+		//}
+	}*/
+
 	public int damageDropped(int par1) {
 		return 0;
 	}
 
-    @Override
-    public int getMobilityFlag() {
-        return 1;
-    }
+	@Override
+	public int getMobilityFlag() {
+		return 1;
+	}
 
 	public void setBlockBoundsBasedOnState(IBlockAccess world, int x, int y, int z) {
 		int meta = world.getBlockMetadata(x,y,z);
-		switch (meta) {
+		switch (meta%6) {
 		case 0: {
 			this.setBlockBounds(0,0.99F,0,1,1,1);
 			break; }
@@ -90,7 +139,7 @@ public class BlockIlluminatedBlock extends Block {
 			break;*/
 		}
 	}
-	
+
 	public void onNeighborBlockChange(World par1World, int par2, int par3, int par4, int par5) {
 		int meta = par1World.getBlockMetadata(par2, par3, par4);
 		boolean flag=false;
@@ -127,11 +176,11 @@ public class BlockIlluminatedBlock extends Block {
 			break;
 		}
 		}
-		
+
 		if (flag) {
 			par1World.setBlockToAir(par2,par3,par4);
 		}
-		
+
 	}
 
 	public AxisAlignedBB getCollisionBoundingBoxFromPool(World par1World, int par2, int par3, int par4)
@@ -157,23 +206,16 @@ public class BlockIlluminatedBlock extends Block {
 	}
 
 
-	/**
-	 * Returns the quantity of items to drop on block destruction.
-	 */
-    @Override
-	 public int quantityDropped(Random par1Random)
-	 {
-		 return par1Random.nextInt(2);
-	 }
-
-	 /**
-	  * Returns the ID of the items to drop on destruction.
-	  */
-     @Override
-	 public Item getItemDropped(int par1, Random par2Random, int par3)
-	 {
-		 return Items.glowstone_dust;
-     }
+	@Override
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
+	{
+		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
+		if (metadata<6 && world.rand.nextInt(2)==1)
+		{
+			ret.add(new ItemStack(Items.glowstone_dust,1));
+		}
+		return ret;
+	}
 
 
 }

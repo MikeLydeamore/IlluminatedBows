@@ -28,6 +28,9 @@ public class Config {
     public static boolean thermalExpansion;
 
     public static boolean illuminatedSapling;
+    
+    public static boolean thaumModule;
+    public static boolean magicParticleDisplay;
 
     public static void doConfig(File file) {
 
@@ -57,7 +60,9 @@ public class Config {
         thermalExpansion = config.get("Integration","ThermalExpansion",false,"Thermal Expansion Compatability").getBoolean(false);
 
         illuminatedSapling = config.get("General","IlluminatingSaplingDrop",true,"True = Illuminated Saplings drop from leaves. False = Oak Saplings drop from leaves").getBoolean(true);
-
+        
+        thaumModule = config.get("Thaumcraft","enable",true).getBoolean();
+        magicParticleDisplay = config.get("Thaumcraft","illuminateParticles",true,"Magical Illuminations spawn particles").getBoolean();
         config.save();
 
     }

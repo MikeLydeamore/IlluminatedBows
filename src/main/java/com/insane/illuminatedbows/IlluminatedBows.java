@@ -85,7 +85,7 @@ public class IlluminatedBows {
 		IlluminatedBlocks.preInit();
 		IlluminatedItems.preInit();
         
-        if (Loader.isModLoaded("Thaumcraft"))
+        if (Config.thaumModule && Loader.isModLoaded("Thaumcraft"))
         {
         	TCAddon.preInit();
         }
@@ -98,7 +98,7 @@ public class IlluminatedBows {
 		
 		Crafting.addCraftingRecipesAndRegisterOres();
 		
-		if (Loader.isModLoaded("Thaumcraft"))
+		if (Config.thaumModule && Loader.isModLoaded("Thaumcraft"))
 		{
 			TCAddon.init();
 		}
@@ -111,7 +111,7 @@ public class IlluminatedBows {
     @Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
     	
-    	if (Loader.isModLoaded("Thaumcraft"))
+    	if (Config.thaumModule && Loader.isModLoaded("Thaumcraft"))
     	{
     		TCAddon.postInit();
     	}
