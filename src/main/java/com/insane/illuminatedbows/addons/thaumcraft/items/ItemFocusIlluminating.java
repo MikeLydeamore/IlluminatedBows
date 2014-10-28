@@ -1,12 +1,16 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.EnumHelper;
@@ -25,6 +29,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemFocusIlluminating extends Item implements IWandFocus {
+
+	public static AspectList visCost = new AspectList().add(Aspect.AIR, (int)(100*com.insane.illuminatedbows.Config.illuminatingFocusAerCost)).add(Aspect.FIRE, (int)(100*com.insane.illuminatedbows.Config.illuminatingFocusFireCost));
 
 	public ItemFocusIlluminating()
 	{
@@ -45,6 +51,12 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	}
 
 	@Override
+	public EnumRarity getRarity(ItemStack stack)
+	{
+		return EnumRarity.rare;
+	}
+
+	@Override
 	public IIcon getFocusDepthLayerIcon() {
 		return null;
 	}
@@ -62,12 +74,22 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	@Override
 	public AspectList getVisCost() {
-		return new AspectList().add(Aspect.AIR, 101).add(Aspect.FIRE, 101);
+		return visCost;
 	}
 
 	@Override
 	public boolean isVisCostPerTick() {
 		return false;
+	}
+
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
+	{
+		list.add(StatCollector.translateToLocal("item.focus.cost"));
+		for (Aspect aspect : visCost.getAspectsSorted()) {
+			float amount = visCost.getAmount(aspect) / 100.0F;
+			list.add(" " + '\u00a7' + aspect.getChatcolor() + aspect.getName() + '\u00a7' + "r x " + amount);
+		}
 	}
 
 	@Override
@@ -105,7 +127,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 		j = event.charge;
 
 
-		if (player.capabilities.isCreativeMode||ThaumcraftApiHelper.consumeVisFromInventory(player,new AspectList().add(Aspect.AIR,101).add(Aspect.FIRE,101))) 
+		if (player.capabilities.isCreativeMode||ThaumcraftApiHelper.consumeVisFromWand(itemstack, player, visCost, true,false)) 
 		{
 			float f = (float)j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;

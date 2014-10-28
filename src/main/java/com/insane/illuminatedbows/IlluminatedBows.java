@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.insane.illuminatedbows.addons.nei.NEICompat;
 import com.insane.illuminatedbows.addons.thaumcraft.TCAddon;
 import com.insane.illuminatedbows.blocks.BlockIlluminatedBlock;
 import com.insane.illuminatedbows.blocks.BlockIlluminatedLeaves;
@@ -54,7 +55,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.6a", dependencies="after:ThermalExpansion")
+@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.7.0", dependencies="after:ThermalExpansion;after:Thaumcraft;after:NotEnoughItems")
 public class IlluminatedBows {
 
 	public static final String MODID = "insane_IlluminatedBows";
@@ -114,6 +115,10 @@ public class IlluminatedBows {
     	if (Config.thaumModule && Loader.isModLoaded("Thaumcraft"))
     	{
     		TCAddon.postInit();
+    	}
+    	if (Loader.isModLoaded("NotEnoughItems"))
+    	{
+    		NEICompat.hideItem(new ItemStack(IlluminatedBlocks.illuminatedBlock, 1, OreDictionary.WILDCARD_VALUE));
     	}
 	}
 

@@ -31,6 +31,7 @@ public class Config {
     
     public static boolean thaumModule;
     public static boolean magicParticleDisplay;
+    public static double illuminatingFocusAerCost, illuminatingFocusFireCost;
 
     public static void doConfig(File file) {
 
@@ -63,6 +64,8 @@ public class Config {
         
         thaumModule = config.get("Thaumcraft","enable",true).getBoolean();
         magicParticleDisplay = config.get("Thaumcraft","illuminateParticles",true,"Magical Illuminations spawn particles").getBoolean();
+        illuminatingFocusAerCost=config.get("Thaumcraft","illuminatingFocusAerCost", "0.5","Amount of Aer to consume per magical cast").getDouble();
+        illuminatingFocusFireCost = config.get("Thaumcraft","illuminatingFocusFireCost", "0.5","Amount of Aer to consume per magical cast").getDouble();
         config.save();
 
     }

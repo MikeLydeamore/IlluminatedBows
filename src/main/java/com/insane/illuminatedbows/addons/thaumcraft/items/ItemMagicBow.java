@@ -49,6 +49,11 @@ public class ItemMagicBow extends ItemIlluminatedBow implements IRepairable {
     }
 	
 	@Override
+	public boolean isItemTool(ItemStack stack) {
+		return true;
+	}
+	
+	@Override
     @SideOnly(Side.CLIENT)
     public IIcon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
             if (usingItem == null) { return itemIcon; }
@@ -101,7 +106,7 @@ public class ItemMagicBow extends ItemIlluminatedBow implements IRepairable {
 		j = event.charge;
 
 
-		if (par3EntityPlayer.capabilities.isCreativeMode||ThaumcraftApiHelper.consumeVisFromInventory(par3EntityPlayer,new AspectList().add(Aspect.AIR,100).add(Aspect.FIRE,100))) 
+		if (par3EntityPlayer.capabilities.isCreativeMode||ThaumcraftApiHelper.consumeVisFromInventory(par3EntityPlayer, ItemFocusIlluminating.visCost)) 
 		{
 			float f = (float)j / 20.0F;
 			f = (f * f + f * 2.0F) / 3.0F;

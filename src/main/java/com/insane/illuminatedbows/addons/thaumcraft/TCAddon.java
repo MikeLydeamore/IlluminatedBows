@@ -44,8 +44,8 @@ public class TCAddon {
 	public static ResearchPage pageMagicBowTwo;
 	
 	public static String illuminatingFocusKey = IlluminatedBows.MODID+"illuminatingFocus";
-	public static String[] focusParents = {magicBowKey};
-	public static ResearchItem researchFocus = new ResearchItem(illuminatingFocusKey,TCCATEGORY,new AspectList().add(Aspect.LIGHT,1).add(Aspect.MAGIC, 1).add(Aspect.WEAPON,1),-2,2,2,focusIconLocation).setParents(focusParents);
+
+	public static ResearchItem researchFocus = new ResearchItem(illuminatingFocusKey,TCCATEGORY,new AspectList().add(Aspect.LIGHT,1).add(Aspect.MAGIC, 1).add(Aspect.WEAPON,1),-2,2,2,focusIconLocation);
 	public static ResearchPage pageFocusOne = new ResearchPage(illuminatingFocusKey,"tc.focusIlluminating.descriptionPage");
 	public static ResearchPage pageFocusTwo;
 	
@@ -73,9 +73,14 @@ public class TCAddon {
 	
 	public static void postInit()
 	{
+		String[] magicBowParents = {"NITOR","ALUMENTUM","INFUSION"};
+		researchMagicBow.setParents(magicBowParents);
 		ResearchCategories.registerCategory(TCCATEGORY,iconLocation, backgroundLocation);
 		researchMagicBow = researchMagicBow.setPages(pageMagicBowOne,pageMagicBowTwo);
 		ResearchCategories.addResearch(researchMagicBow);
+		
+		String[] focusParents = {magicBowKey,"FOCUSFIRE","INFUSION"};
+		researchFocus.setParents(focusParents);
 		researchFocus = researchFocus.setPages(pageFocusOne,pageFocusTwo);
 		ResearchCategories.addResearch(researchFocus);
 	}

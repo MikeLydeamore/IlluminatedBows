@@ -65,6 +65,8 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
 		if (!this.worldObj.isRemote && par1MovingObjectPosition != null) {
 			if (par1MovingObjectPosition.entityHit != null)	{
+				if (magic)
+					this.setDead();
 			}
 			else {
 				int i = par1MovingObjectPosition.blockX;
@@ -106,15 +108,13 @@ public class EntityIlluminatedArrow extends EntityArrow {
 						this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
 						this.setDead();
 					}
-					else
-					{
-						if (magic)
-							this.setDead();
-					}
 				}
+
+				if (magic)
+					this.setDead();
 			}
-			//this.setDead();
 		}
+
 	}
 	/*@Override
 	protected float getGravityVelocity() {
