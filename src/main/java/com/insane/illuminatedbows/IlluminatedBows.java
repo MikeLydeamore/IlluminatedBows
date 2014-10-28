@@ -55,11 +55,11 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
-@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.7.0", dependencies="after:ThermalExpansion;after:Thaumcraft;after:NotEnoughItems")
+@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.7.0b", dependencies="after:ThermalExpansion;after:Thaumcraft;after:NotEnoughItems")
 public class IlluminatedBows {
 
 	public static final String MODID = "insane_IlluminatedBows";
-	@Mod.Instance("insane_IlluminatedBows")
+	@Mod.Instance(MODID)
 	public static IlluminatedBows instance;
 	@SidedProxy(clientSide="com.insane.illuminatedbows.client.ClientProxy", serverSide="com.insane.illuminatedbows.CommonProxy")
 	public static CommonProxy proxy;

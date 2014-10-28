@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.insane.illuminatedbows.tile.TileIllumination;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -14,6 +16,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
@@ -62,47 +65,16 @@ public class BlockIlluminatedBlock extends Block {
 
 	}
 
-	/*@SideOnly(Side.CLIENT)
 	@Override
-	public void randomDisplayTick(World world, int x, int y, int z, Random rand)
+	public boolean hasTileEntity(int meta)
 	{
-		//if (rand.nextInt(20)==0)
-		//{
-			int meta = world.getBlockMetadata(x, y, z);
-			if (meta>=6)
-			{
-				switch(meta) {
-				case 6: {
-					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+0.8f,z+rand.nextFloat(), 0d,0d,0d);
-					break;
-				}
-				case 7: {
-					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+0.2f,z+rand.nextFloat(), 0d,0d,0d);
-					break;
-				}
-				case 8: {
-					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+rand.nextFloat(),z+0.8, 0d,0d,0d);
-					break;
-				}
-				case 9: {
-					world.spawnParticle("enchantmenttable", x+rand.nextFloat(),y+rand.nextFloat(),z+0.2, 0d,0d,0d);
-					break;
-				}
-				case 10: {
-					world.spawnParticle("enchantmenttable", x+0.8,y+rand.nextFloat(),z+rand.nextFloat(), 0d,0d,0d);
-					break;
-				}
-				case 11: {
-					world.spawnParticle("enchantmenttable", x+0.2,y+rand.nextFloat(),z+rand.nextFloat(), 0d,0d,0d);
-					break;
-				}
-				
-					
-				}
-				
-			}
-		//}
-	}*/
+		return true;
+	}
+	
+	public TileEntity createNewTitleEntity(World world)
+	{
+		return new TileIllumination();
+	}
 
 	public int damageDropped(int par1) {
 		return 0;
