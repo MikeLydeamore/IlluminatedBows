@@ -1,16 +1,7 @@
 package com.insane.illuminatedbows.items;
 
-import com.insane.illuminatedbows.Config;
-import com.insane.illuminatedbows.EntityIlluminatedArrow;
-import com.insane.illuminatedbows.IlluminatedBows;
-import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
-
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntitySnowball;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -18,6 +9,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
+
+import com.insane.illuminatedbows.Config;
+import com.insane.illuminatedbows.EntityIlluminatedArrow;
+import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class ItemIlluminatedBow extends ItemBow {
 
@@ -126,5 +124,9 @@ public class ItemIlluminatedBow extends ItemBow {
             }
         }
     }
-
+	
+	@Override
+	public boolean isFull3D() {
+	    return true;
+	}
 }

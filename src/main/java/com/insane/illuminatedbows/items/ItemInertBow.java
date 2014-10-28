@@ -19,4 +19,9 @@ public class ItemInertBow extends Item {
     public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:inertbow_standby");
     }
+    
+    @Override
+    public boolean isFull3D() {
+        return true;
+    }
 }
