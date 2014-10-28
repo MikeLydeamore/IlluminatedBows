@@ -1,0 +1,32 @@
+item.illuminatedBow.name=光明之弓
+item.inertBow.name=惰性弓
+item.illuminatedArrow.name=光明箭矢
+item.inertArrow.name=惰性箭矢
+item.illuminatedStick.name=光明木棍
+tile.illuminatedBlock.name=光明方块
+tile.illuminatedBlock.broken.name=光明方块
+tile.illuminatedBlock.left.name=光明方块
+tile.illuminatedBlock.right.name=光明方块
+tile.illuminatedItemBlock.name=光明方块
+tile.illuminatedSapling.name=光明树苗
+tile.illuminatedWood.name=光明木
+tile.illuminatedLeaves.name=光明树叶
+tile.illuminatedPlanks.name=光明木板
+tile.illuminatedStairs.name=光明楼梯
+tile.illuminatedSlab.halfSlab.name=光明台阶
+tile.illuminatedSlab.doubleSlab.name=光明台阶
+tile.illuminatedSlab.topSlab.name=光明台阶
+tile.illuminatedSlab.name=光明台阶
+tc.research_category.illuminatedBows=光明之弓
+tc.research_name.insane_IlluminatedBowsmagicBow=注入了要素魔力的光明之弓
+tc.research_text.insane_IlluminatedBowsmagicBow=用魔法点亮你的世界吧.
+
+tc.magicBow.descriptionPage=目前为止,你一直都在像其他人一样"发射"光明.但自从有了魔法一切都将改变.<BR><BR>看起来只要一点魔法就能让照明持续很久.在接触了永恒的花火与燃料之后,你意识到注入要素的光明之弓能利用法杖中的一点魔力来制造出光亮.再也不用浪费萤石了! <BR><BR>不幸的是,魔法似乎将你产生的光芒变成紫色的了.<BR>有所得,必有所失.
+item.magicBow.name=光芒之弓
+tile.illuminatedMagicBlock.name=光明方块
+tc.focusIlluminating.descriptionPage=你知道什么叫做恼人么?必须带着500种不同的工具才能完成工作.幸运的是,在一番思考后,你已经能将它减至499个了.<BR><BR>光明核心就和光明之弓一样,但它是以法杖核心的形式出现.尽管核心已经蕴含了不少魔力,你觉得使用起来还需用到一些额外的魔力.<BR><BR>如果你想问那些箭矢从何而来,不要在意细节.(Magic)
+item.focusIlluminating.name=法杖核心:光明
+tc.research_name.insane_IlluminatedBowsilluminatingFocus=法杖核心:光明
+tc.research_text.insane_IlluminatedBowsilluminatingFocus=点亮!
+
+item.focus.cost=Vis per cast
