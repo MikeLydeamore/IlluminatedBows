@@ -1,9 +1,8 @@
 package com.insane.illuminatedbows;
 
-import net.minecraftforge.common.config.Configuration;
-
 import java.io.File;
-import java.io.IOException;
+
+import net.minecraftforge.common.config.Configuration;
 
 /**
  * Created by Michael on 19/08/2014.
@@ -21,6 +20,7 @@ public class Config {
     public static int saplingLiquidAmount;
 
     public static int boneMealChance;
+    public static float glowstoneChancePerSide;
 
     public static int glowstonePlankChance;
     public static int sawmillPlankEnergy;
@@ -28,7 +28,7 @@ public class Config {
     public static boolean thermalExpansion;
 
     public static boolean illuminatedSapling;
-    
+
     public static boolean thaumModule;
     public static boolean magicParticleDisplay;
     public static double illuminatingFocusAerCost, illuminatingFocusFireCost;
@@ -53,7 +53,11 @@ public class Config {
 
         //Other
         boneMealChance = config.get("General", "BoneMealChance",3, "Chance for bonemeal to work (1 in n)").getInt(3);
-
+        glowstoneChancePerSide = config.getFloat("glowstoneChancePerSide", "General", 0.3334f, 0f, 2f,
+                        "Chance that an illumination block will drop glowstone. Additional illuminated sides increase the chance. " +
+                        "Math is as follows, the result being the amount of glowstone dropped:\n " +
+                        "floor(chance * sideCount) + an additional one if rand.nextFloat() < (chance - floor(chance))\n");
+        
         //Planks
         glowstonePlankChance = config.get("Planks", "GlowstoneChance", 4, "Chance of getting glowstone dust from Sawmilling Illuminated Planks").getInt(4);
         sawmillPlankEnergy = config.get("Planks", "SawmillEnergyAmount", 1000, "Amount of energy (RF) required to Sawmill Illuminated Planks").getInt(1000);
