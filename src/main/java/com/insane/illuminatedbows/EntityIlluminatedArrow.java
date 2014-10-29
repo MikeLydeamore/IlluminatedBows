@@ -76,7 +76,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
                 Block block = worldObj.getBlock(x, y, z);
                 
-                if (block.isNormalCube() && worldObj.getTileEntity(x, y, z) == null)
+                if ((block.getRenderType() == 0 || block.isOpaqueCube() || block.isNormalCube()) && worldObj.getTileEntity(x, y, z) == null)
                 {
                     int blockMeta = worldObj.getBlockMetadata(x, y, z);
                     this.worldObj.setBlock(x, y, z, IlluminatedBlocks.illuminatedBlock, blockMeta, 3);
@@ -87,12 +87,16 @@ public class EntityIlluminatedArrow extends EntityArrow {
                 }
                 else if (block instanceof BlockIlluminatedBlock)
                 {
-                    ((TileIllumination)worldObj.getTileEntity(x, y, z)).sides.add(meta);
-                    this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
-                    this.worldObj.markBlockForUpdate(x, y, z);
-                    this.setDead();
+                    TileIllumination te = (TileIllumination) worldObj.getTileEntity(x, y, z);
+                    if (!te.sides.contains(meta))
+                    {
+                        te.sides.add(meta);
+                        this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
+                        this.worldObj.markBlockForUpdate(x, y, z);
+                        this.setDead();
+                    }
                 }
-                
+
                 if (magic)
                     this.setDead();
             }

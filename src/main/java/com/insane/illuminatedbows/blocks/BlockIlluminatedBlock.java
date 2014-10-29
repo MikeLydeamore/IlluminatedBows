@@ -186,23 +186,16 @@ public class BlockIlluminatedBlock extends Block {
 //		return null;
 //	}
 
-//	@Override
-//	public boolean isOpaqueCube() {
-//		return false;
-//	}
-
-//	@Override
-//	public boolean renderAsNormalBlock()
-//	{
-//		return false;
-//	}
-//
-//	@Override
-//	public int getRenderBlockPass()
-//	{
-//		return 1;
-//	}
-
+	@Override
+	public boolean renderAsNormalBlock() {
+		return false;
+	}
+	
+    @Override
+    public boolean isOpaqueCube() {
+        return false;
+    }
+    
     public void setStats(World world, int x, int y, int z)
     {
         TileIllumination te = (TileIllumination) world.getTileEntity(x, y, z);
@@ -293,9 +286,12 @@ public class BlockIlluminatedBlock extends Block {
             block.breakBlock(world, x, y, z, block, meta);
         }
 
-        for (ItemStack stack : block.getDrops(world, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, player.getCurrentEquippedItem())))
+        if (!player.capabilities.isCreativeMode)
         {
-            dropBlockAsItem(world, x, y, z, stack);
+            for (ItemStack stack : block.getDrops(world, x, y, z, meta, EnchantmentHelper.getEnchantmentLevel(Enchantment.fortune.effectId, player.getCurrentEquippedItem())))
+            {
+                dropBlockAsItem(world, x, y, z, stack);
+            }
         }
 
         super.onBlockHarvested(world, x, y, z, meta, player);
@@ -311,6 +307,4 @@ public class BlockIlluminatedBlock extends Block {
 		}
 		return ret;
 	}
-
-
 }
