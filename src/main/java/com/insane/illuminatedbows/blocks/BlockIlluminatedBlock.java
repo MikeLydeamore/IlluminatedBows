@@ -71,7 +71,7 @@ public class BlockIlluminatedBlock extends Block {
 	    TileIllumination te = (TileIllumination) world.getTileEntity(x, y, z);
 	    for (int i : te.sides)
 	    {
-	        if (i == side)
+	        if (i % 6 == side)
 	        {
 	            return getIcon(0, i);
 	        }
