@@ -64,10 +64,9 @@ public class IlluminatedBows {
 	@SidedProxy(clientSide="com.insane.illuminatedbows.client.ClientProxy", serverSide="com.insane.illuminatedbows.CommonProxy")
 	public static CommonProxy proxy;
 
-
-	
 	private static List frontRecipes = new ArrayList();
 
+	public static int renderIdIllumination;
 
 	@Mod.EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
@@ -103,11 +102,7 @@ public class IlluminatedBows {
 		{
 			TCAddon.init();
 		}
-		
-		
 	}
-
-    
 
     @Mod.EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
@@ -120,8 +115,5 @@ public class IlluminatedBows {
     	{
     		NEICompat.hideItem(new ItemStack(IlluminatedBlocks.illuminatedBlock, 1, OreDictionary.WILDCARD_VALUE));
     	}
-	}
-
-	
-	
+	}	
 }

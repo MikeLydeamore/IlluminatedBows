@@ -10,6 +10,7 @@ import com.insane.illuminatedbows.items.ItemIlluminatedBow;
 import com.insane.illuminatedbows.items.ItemIlluminatedStick;
 import com.insane.illuminatedbows.items.ItemInertArrow;
 import com.insane.illuminatedbows.items.ItemInertBow;
+import com.insane.illuminatedbows.tile.TileIllumination;
 import com.insane.illuminatedbows.util.ThermalExpansionUtil;
 
 import cpw.mods.fml.common.Loader;
@@ -43,7 +44,8 @@ public class IlluminatedBlocks {
 	{		
 		illuminatedBlock = new BlockIlluminatedBlock();
 		GameRegistry.registerBlock(illuminatedBlock, ItemIlluminatedBlock.class, "illuminatedBlock");
-
+		GameRegistry.registerTileEntity(TileIllumination.class, "illumination");
+		
 		illuminatedSapling = new BlockIlluminatedSapling();
 		MinecraftForge.EVENT_BUS.register(illuminatedSapling);
 		GameRegistry.registerBlock(illuminatedSapling, "illuminatedSapling");

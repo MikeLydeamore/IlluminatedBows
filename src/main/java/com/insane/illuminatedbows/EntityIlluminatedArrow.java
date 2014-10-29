@@ -1,26 +1,21 @@
 package com.insane.illuminatedbows;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+import java.lang.reflect.Field;
+
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
-import java.lang.reflect.Field;
-import java.util.Random;
-
+import com.insane.illuminatedbows.blocks.BlockIlluminatedBlock;
 import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
+import com.insane.illuminatedbows.tile.TileIllumination;
+
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class EntityIlluminatedArrow extends EntityArrow {
 
@@ -63,56 +58,48 @@ public class EntityIlluminatedArrow extends EntityArrow {
 			this.worldObj.spawnParticle("magicCrit", this.posX, this.posY+2, this.posZ, 255, 213, 0);
 		}
 
+		
 		if (!this.worldObj.isRemote && par1MovingObjectPosition != null) {
 			if (par1MovingObjectPosition.entityHit != null)	{
 				if (magic)
 					this.setDead();
 			}
 			else {
-				int i = par1MovingObjectPosition.blockX;
-				int j = par1MovingObjectPosition.blockY;
-				int k = par1MovingObjectPosition.blockZ;
-				int meta = 0;
-				if (canPlaceBlockAt(this.worldObj, i, j, k)) {
-					switch (par1MovingObjectPosition.sideHit) {
-					case 0:
-						--j;
-						meta = 0;
-						break;
-					case 1:
-						++j;
-						meta = 1;
-						break;
-					case 2:
-						--k;
-						meta = 2;
-						break;
-					case 3:
-						++k;
-						meta = 3;
-						break;
-					case 4:
-						--i;
-						meta = 4;
-						break;
-					case 5:
-						meta = 5;
-						++i;
-					}
-					if (magic)
-						meta+=6;
+				int x = par1MovingObjectPosition.blockX;
+				int y = par1MovingObjectPosition.blockY;
+				int z = par1MovingObjectPosition.blockZ;
+                
+				int meta = par1MovingObjectPosition.sideHit;
+                
+                if (magic)
+                    meta += 6;  
 
-					if (this.worldObj.isAirBlock(i, j, k) || this.worldObj.getBlock(i, j, k).isReplaceable(worldObj, i, j, k))
-					{
-						this.worldObj.setBlock(i, j, k, IlluminatedBlocks.illuminatedBlock, meta, 2);
-						this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
-						this.setDead();
-					}
-				}
+                Block block = worldObj.getBlock(x, y, z);
+                
+                if ((block.getRenderType() == 0 || block.isOpaqueCube() || block.isNormalCube()) && worldObj.getTileEntity(x, y, z) == null)
+                {
+                    int blockMeta = worldObj.getBlockMetadata(x, y, z);
+                    this.worldObj.setBlock(x, y, z, IlluminatedBlocks.illuminatedBlock, blockMeta, 3);
+                    ((TileIllumination) worldObj.getTileEntity(x, y, z)).init(block, meta);
+                    this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
+                    this.worldObj.markBlockForUpdate(x, y, z);
+                    this.setDead();
+                }
+                else if (block instanceof BlockIlluminatedBlock)
+                {
+                    TileIllumination te = (TileIllumination) worldObj.getTileEntity(x, y, z);
+                    if (!te.sides.contains(meta))
+                    {
+                        te.sides.add(meta);
+                        this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);
+                        this.worldObj.markBlockForUpdate(x, y, z);
+                        this.setDead();
+                    }
+                }
 
-				if (magic)
-					this.setDead();
-			}
+                if (magic)
+                    this.setDead();
+            }
 		}
 
 	}
