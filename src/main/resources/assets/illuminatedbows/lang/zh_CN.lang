@@ -30,3 +30,7 @@ tc.research_name.insane_IlluminatedBowsilluminatingFocus=法杖核心:光明
 tc.research_text.insane_IlluminatedBowsilluminatingFocus=点亮!
 
 item.focus.cost=Vis per cast
+
+item.focusColoured.name=法杖核心:斓光
+item.focusColoured.currentcolour=当前色彩
+tile.nitorColour.name=虹彩之光
