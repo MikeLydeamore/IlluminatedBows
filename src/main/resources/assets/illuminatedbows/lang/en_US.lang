@@ -30,3 +30,6 @@ tc.research_name.insane_IlluminatedBowsilluminatingFocus=Wand Focus: Illuminatin
 tc.research_text.insane_IlluminatedBowsilluminatingFocus=Illuminating!
 
 item.focus.cost=Vis per cast
+
+item.focusColoured.name=Wand Focus: Coloured Light
+tile.nitorColour.name=Iridescent Nitor

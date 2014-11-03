@@ -9,6 +9,8 @@ public class TCItems {
 	public static Item itemMagicBow;
 	public static Item itemFocusIlluminating;
 	
+	public static Item itemFocusColoured;
+	
 	public static void preInit()
 	{
 		itemMagicBow = new ItemMagicBow();
@@ -16,5 +18,8 @@ public class TCItems {
 		
 		itemFocusIlluminating = new ItemFocusIlluminating();
 		GameRegistry.registerItem(itemFocusIlluminating, "focusIlluminating");
+		
+		itemFocusColoured = new ItemFocusColoured();
+		GameRegistry.registerItem(itemFocusColoured,"focusColoured");
 	}
 }

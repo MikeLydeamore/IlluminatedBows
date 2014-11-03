@@ -74,7 +74,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 
 	@Override
 	public AspectList getVisCost() {
-		return visCost;
+		return visCost.copy();
 	}
 
 	@Override

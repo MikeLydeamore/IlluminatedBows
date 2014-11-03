@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import com.insane.illuminatedbows.IlluminatedBows;
+import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.items.TCItems;
 import com.insane.illuminatedbows.items.IlluminatedItems;
 
@@ -53,6 +54,7 @@ public class TCAddon {
 	public static void preInit()
 	{
 		TCItems.preInit();
+		TCBlocks.preInit();
 
 	}
 	
