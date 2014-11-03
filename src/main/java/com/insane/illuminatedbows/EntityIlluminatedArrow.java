@@ -88,7 +88,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
                 else if (block instanceof BlockIlluminatedBlock)
                 {
                     TileIllumination te = (TileIllumination) worldObj.getTileEntity(x, y, z);
-                    if (!te.sides.contains(meta))
+                    if (!(te.sides.contains(meta) || te.sides.contains(meta + 6)))
                     {
                         te.sides.add(meta);
                         this.worldObj.playSoundAtEntity(this, "dig.glass", 1.0F, 1.0F);

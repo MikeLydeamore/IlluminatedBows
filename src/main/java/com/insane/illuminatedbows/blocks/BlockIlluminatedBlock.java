@@ -1,7 +1,7 @@
 package com.insane.illuminatedbows.blocks;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -18,11 +18,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
+import com.insane.illuminatedbows.Config;
 import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.tile.TileIllumination;
 
@@ -79,7 +81,8 @@ public class BlockIlluminatedBlock extends Block {
 	    return iconArray[2];
 	}
 
-	@SideOnly(Side.CLIENT)
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+    @SideOnly(Side.CLIENT)
 	@Override
 	public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
 		for (int i=0; i<12; i++) {
@@ -99,6 +102,11 @@ public class BlockIlluminatedBlock extends Block {
 
 	public int damageDropped(int par1) {
 		return 0;
+	}
+	
+	@Override
+	public int quantityDropped(int meta, int fortune, Random random) {
+	    return 0;
 	}
 	
 	@Override
@@ -293,18 +301,19 @@ public class BlockIlluminatedBlock extends Block {
                 dropBlockAsItem(world, x, y, z, stack);
             }
         }
+        
+        float incr = Config.glowstoneChancePerSide;
+        float chance = 0f;
+        
+        for (int i : te.sides)
+        {
+            chance += i < 6 ? incr : 0;
+        }
+
+        int amnt = MathHelper.floor_float(chance);
+        amnt += world.rand.nextFloat() < chance - amnt ? 1 : 0;
+        dropBlockAsItem(world, x, y, z, new ItemStack(Items.glowstone_dust, amnt));
 
         super.onBlockHarvested(world, x, y, z, meta, player);
     }
-
-	@Override
-	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
-	{
-		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		if (metadata<6 && world.rand.nextInt(2)==1)
-		{
-			ret.add(new ItemStack(Items.glowstone_dust,1));
-		}
-		return ret;
-	}
 }
