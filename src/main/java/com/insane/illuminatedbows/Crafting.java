@@ -23,7 +23,7 @@ public class Crafting {
 		GameRegistry.addShapelessRecipe(new ItemStack(IlluminatedBlocks.illuminatedPlanks, 4), new ItemStack(IlluminatedBlocks.illuminatedWood));
 		GameRegistry.addRecipe(new ItemStack(IlluminatedBlocks.illuminatedStairs,4), new Object[] {"x  ", "xx ", "xxx", 'x', plankStack});
 		ItemStack stickStack = new ItemStack(IlluminatedItems.illuminatedStick);
-		GameRegistry.addRecipe(new ItemStack(IlluminatedItems.illuminatedStick,4), new Object[]{"x","x", 'x', plankStack});
+		GameRegistry.addRecipe(new ItemStack(IlluminatedItems.illuminatedStick,4), new Object[]{"x "," x", 'x', plankStack});
 		GameRegistry.addRecipe(new ItemStack(IlluminatedItems.inertBow,1), new Object[] {" xy", "x y"," xy", 'x',IlluminatedItems.illuminatedStick,'y',new ItemStack(Items.string)});
 		GameRegistry.addRecipe(new ItemStack(IlluminatedItems.inertArrow,4), new Object[] {"x","y","z", 'x', Items.flint, 'y', stickStack, 'z', Items.feather});
 		GameRegistry.addRecipe(new ItemStack(IlluminatedBlocks.illuminatedSlab,6), new Object[]{"xxx",'x',plankStack});
