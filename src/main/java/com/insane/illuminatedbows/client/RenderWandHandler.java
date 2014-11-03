@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
@@ -14,21 +15,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Timer;
 import net.minecraftforge.client.IItemRenderer;
-
-import org.lwjgl.opengl.GL11;
-
 import thaumcraft.api.wands.IWandFocus;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
 import com.insane.illuminatedbows.addons.thaumcraft.items.ItemFocusIlluminating;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent.ClientTickEvent;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class RenderWandHandler implements IItemRenderer
 {
     private IItemRenderer wandRenderer;
     private static final Random rand = new Random();
-    private float rot;
+    private int rot;
     
     private static final Field timer =  ReflectionHelper.findField(Minecraft.class, "timer", "Q", "field_71428_T");
     
@@ -126,39 +126,35 @@ public class RenderWandHandler implements IItemRenderer
             glDisable(GL_TEXTURE_2D);
             glShadeModel(GL_SMOOTH);
             glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            OpenGlHelper.glBlendFunc(GL_SRC_ALPHA, GL_ONE, GL_ZERO, GL_ONE);
             glDisable(GL_ALPHA_TEST);
             glEnable(GL_CULL_FACE);
+            glDisable(GL_LIGHTING);
             glDepthMask(false);
 
-            rand.setSeed(2983457L);
+            rand.setSeed(298347L);
             
-            if (!Minecraft.getMinecraft().isGamePaused())
-            {
-                rot = (rot + 0.1f) % 360; 
-            }
-            
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 15; i++)
             {
                 glRotatef(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
                 glRotatef(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
                 glRotatef(rand.nextFloat() * 360.0F, 0.0F, 0.0F, 1.0F);
                 glRotatef(rand.nextFloat() * 360.0F, 1.0F, 0.0F, 0.0F);
 
-                glRotatef(rot, 1, 1, 1);
+                glRotatef((rand.nextFloat() * 0.25f * rot) % 360, 0, 1, 0);
 
                 tessellator.startDrawingQuads();
 
                 tessellator.setBrightness(0xFF);
-                tessellator.setColorRGBA(255, 255, 0, 255);
+                tessellator.setColorRGBA(255, 255, 100, 255);
 
                 tessellator.addVertex(0, 0f, 0);
                 tessellator.addVertex(0, 0f, 0);
                 
-                tessellator.setColorRGBA(255, 255, 255, 0);
+                tessellator.setColorRGBA(255, 255, 100, 0);
                 
-                tessellator.addVertex(0.5f, 0.4f, 0.5f);
-                tessellator.addVertex(0.5f, 0.6f, 0.5f);
+                tessellator.addVertex(0.4f, 0.25f, 0.4f);
+                tessellator.addVertex(0.4f, 0.55f, 0.4f);
 
                 tessellator.draw();
             }
@@ -173,5 +169,11 @@ public class RenderWandHandler implements IItemRenderer
 
             glPopMatrix();
         }
+    }
+    
+    @SubscribeEvent
+    public void onClientTick(ClientTickEvent event)
+    {
+        rot++;
     }
 }
