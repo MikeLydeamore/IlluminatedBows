@@ -1,5 +1,7 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
+import java.util.List;
+
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.tile.TileColouredNitor;
 
@@ -11,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
 public class ItemFocusColoured extends Item implements IWandFocus {
@@ -23,6 +26,18 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 		this.setUnlocalizedName("focusColoured");
 		this.setMaxStackSize(1);
 	}
+	
+	@Override
+	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
+	{
+		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": ");
+		list.add(StatCollector.translateToLocal("item.focus.cost"));
+		for (Aspect aspect : visCost.getAspectsSorted()) {
+			float amount = visCost.getAmount(aspect) / 100.0F;
+			list.add(" " + '\u00a7' + aspect.getChatcolor() + aspect.getName() + '\u00a7' + "r x " + amount);
+		}
+	}
+	
 	@Override
 	public int getFocusColor() {
 		return 0;
