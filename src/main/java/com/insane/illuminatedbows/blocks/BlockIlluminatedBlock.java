@@ -258,6 +258,7 @@ public class BlockIlluminatedBlock extends Block {
     }
     
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)
     {
         int max = 4;
