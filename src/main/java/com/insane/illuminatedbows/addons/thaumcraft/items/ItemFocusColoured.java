@@ -2,15 +2,19 @@ package com.insane.illuminatedbows.addons.thaumcraft.items;
 
 import java.util.List;
 
+import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.tile.TileColouredNitor;
 
+import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandFocus;
+import thaumcraft.common.items.wands.ItemWandCasting;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
@@ -30,7 +34,13 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
 	{
-		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": ");
+		NBTTagCompound tag;
+		if (stack.hasTagCompound())
+			tag = stack.getTagCompound();
+		else
+			tag = new NBTTagCompound();
+		
+		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": "+tag.getInteger(IlluminatedBows.MODID+"colour"));
 		list.add(StatCollector.translateToLocal("item.focus.cost"));
 		for (Aspect aspect : visCost.getAspectsSorted()) {
 			float amount = visCost.getAmount(aspect) / 100.0F;
@@ -72,7 +82,7 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	public ItemStack onFocusRightClick(ItemStack itemstack, World world,
 			EntityPlayer player, MovingObjectPosition mop) {
 		player.swingItem();
-		if (mop != null) {
+		if (mop != null && ThaumcraftApiHelper.consumeVisFromWand(itemstack, player, visCost.copy(), true, false)) {
 			int x = mop.blockX;
 			int y = mop.blockY;
 			int z = mop.blockZ;
@@ -106,9 +116,18 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 
 			if (world.getBlock(x, y, z).isReplaceable(world, x, y, z) || world.isAirBlock(x, y, z))
 			{
+				ItemStack focusStack = ((ItemWandCasting) itemstack.getItem()).getFocusItem(itemstack);
+				NBTTagCompound tag;
+				if (focusStack.hasTagCompound())
+					tag = focusStack.getTagCompound();
+				else
+					tag = new NBTTagCompound();
+				
+				
+				
 				world.setBlock(x, y, z, TCBlocks.nitorColour);
 				TileColouredNitor te = (TileColouredNitor) world.getTileEntity(x, y, z);
-				te.setColour(1);
+				te.setColour(getColour(focusStack));
 				world.playSoundEffect(mop.blockX + 0.5D, mop.blockY + 0.5D, mop.blockZ + 0.5D, "thaumcraft:zap", 0.25F, 1.0F);
 			}
 		}
@@ -127,9 +146,20 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 
 	}
 
+	public int getColour(ItemStack stack)
+	{
+		NBTTagCompound tag;
+		if (stack.hasTagCompound())
+			tag=stack.getTagCompound();
+		else
+			tag = new NBTTagCompound();
+		
+		return tag.getInteger(IlluminatedBows.MODID+"colour");
+	}
+	
 	@Override
 	public String getSortingHelper(ItemStack itemstack) {
-		return "CL00";
+		return "CL0"+getColour(itemstack);
 	}
 
 	@Override

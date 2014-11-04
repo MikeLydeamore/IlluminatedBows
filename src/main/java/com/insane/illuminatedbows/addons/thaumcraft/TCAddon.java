@@ -14,6 +14,7 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.util.ResourceLocation;
 
 import com.insane.illuminatedbows.IlluminatedBows;
@@ -28,6 +29,7 @@ public class TCAddon {
 
 	private static InfusionRecipe magicBowRecipe;
 	private static InfusionRecipe focusRecipe;
+	private static InfusionRecipe colouredFocusRecipe;
 	
 
 	
@@ -35,6 +37,7 @@ public class TCAddon {
 	private static ResourceLocation bowIconLocation = new ResourceLocation("illuminatedbows:textures/items/visbow_standby.png");
 	private static ResourceLocation focusIconLocation = new ResourceLocation("illuminatedbows:textures/items/focus_illuminating.png");
 	private static ResourceLocation backgroundLocation = new ResourceLocation("illuminatedbows:textures/thaumcraft/bg.png");
+	private static ResourceLocation focusColourLocation = new ResourceLocation("illuminatedbows:textures/items/focus_coloured.png"); 
 	
 	public final static String TCCATEGORY = "illuminatedBows";
 	
@@ -45,10 +48,15 @@ public class TCAddon {
 	public static ResearchPage pageMagicBowTwo;
 	
 	public static String illuminatingFocusKey = IlluminatedBows.MODID+"illuminatingFocus";
-
 	public static ResearchItem researchFocus = new ResearchItem(illuminatingFocusKey,TCCATEGORY,new AspectList().add(Aspect.LIGHT,1).add(Aspect.MAGIC, 1).add(Aspect.WEAPON,1),-2,2,2,focusIconLocation);
 	public static ResearchPage pageFocusOne = new ResearchPage(illuminatingFocusKey,"tc.focusIlluminating.descriptionPage");
 	public static ResearchPage pageFocusTwo;
+	
+	public static String colouredFocusKey = IlluminatedBows.MODID+"colouredFocus";
+	public static ResearchItem researchColouredFocus = new ResearchItem(colouredFocusKey,TCCATEGORY,new AspectList().add(Aspect.LIGHT,1).add(Aspect.MAGIC,1).add(Aspect.FIRE, 1).add(Aspect.AURA,1), 2, 2, 2,focusColourLocation);
+	public static ResearchPage pageColouredFocusOne = new ResearchPage(colouredFocusKey,"tc.focusColoured.descriptionPage");
+	public static ResearchPage pageColouredFocusTwo;
+	public static ResearchPage pageColouredFocusThree;
 	
 	
 	public static void preInit()
@@ -63,13 +71,18 @@ public class TCAddon {
 		ItemStack nitorStack = ItemApi.getItem("itemResource", 1);
 		ItemStack alumentumStack = ItemApi.getItem("itemResource", 0);
 		ItemStack glowstoneStack = new ItemStack(Items.glowstone_dust);
+		ItemStack flameFocus = ItemApi.getItem("itemFocusFire",0);
 		if (nitorStack != null && alumentumStack != null)
 		{
 			magicBowRecipe = ThaumcraftApi.addInfusionCraftingRecipe(magicBowKey, new ItemStack(TCItems.itemMagicBow),5, new AspectList().add(Aspect.AIR, 16).add(Aspect.LIGHT, 64).add(Aspect.WEAPON, 16).add(Aspect.MAGIC,16), new ItemStack(IlluminatedItems.illuminatedBow), new ItemStack[] {glowstoneStack,nitorStack,glowstoneStack,nitorStack,alumentumStack});
-			focusRecipe = ThaumcraftApi.addInfusionCraftingRecipe(illuminatingFocusKey, new ItemStack(TCItems.itemFocusIlluminating),5, new AspectList().add(Aspect.LIGHT, 32).add(Aspect.MAGIC, 8), nitorStack, new ItemStack[] {new ItemStack(TCItems.itemMagicBow), new ItemStack(Items.arrow),glowstoneStack, new ItemStack(Items.feather)});
+			focusRecipe = ThaumcraftApi.addInfusionCraftingRecipe(illuminatingFocusKey, new ItemStack(TCItems.itemFocusIlluminating),5, new AspectList().add(Aspect.LIGHT, 32).add(Aspect.MAGIC, 8), flameFocus, new ItemStack[] {new ItemStack(TCItems.itemMagicBow), new ItemStack(Items.arrow),glowstoneStack, new ItemStack(Items.feather)});
+			colouredFocusRecipe = ThaumcraftApi.addInfusionCraftingRecipe(colouredFocusKey, new ItemStack(TCItems.itemFocusColoured), 5, new AspectList().add(Aspect.AIR,16).add(Aspect.ELDRITCH,8).add(Aspect.SENSES,32).add(Aspect.LIGHT,64), new ItemStack(TCItems.itemFocusIlluminating), new ItemStack[] {nitorStack, new ItemStack(Items.dye,1,15), nitorStack, new ItemStack(Items.dye,1,1), nitorStack, new ItemStack(Items.dye,1,2), nitorStack, new ItemStack(Items.dye,1,4)});
 		}
 		pageMagicBowTwo = new ResearchPage(magicBowRecipe);
 		pageFocusTwo = new ResearchPage(focusRecipe);
+		pageColouredFocusTwo = new ResearchPage(colouredFocusRecipe);
+
+		CraftingManager.getInstance().getRecipeList().add(new FocusColourCrafting());
 		
 	}
 	
@@ -85,5 +98,10 @@ public class TCAddon {
 		researchFocus.setParents(focusParents);
 		researchFocus = researchFocus.setPages(pageFocusOne,pageFocusTwo);
 		ResearchCategories.addResearch(researchFocus);
+		
+		String[] colouredFocusParents = {magicBowKey, "FOCUSFIRE","INFUSION",illuminatingFocusKey};
+		researchColouredFocus.setParents(colouredFocusParents);
+		researchColouredFocus = researchColouredFocus.setPages(pageColouredFocusOne, pageColouredFocusTwo);
+		ResearchCategories.addResearch(researchColouredFocus);
 	}
 }

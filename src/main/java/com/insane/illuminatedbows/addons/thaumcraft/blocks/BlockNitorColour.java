@@ -1,5 +1,7 @@
 package com.insane.illuminatedbows.addons.thaumcraft.blocks;
 
+import java.util.Random;
+
 import com.insane.illuminatedbows.addons.thaumcraft.tile.TileColouredNitor;
 
 import cpw.mods.fml.relauncher.Side;
@@ -12,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class BlockNitorColour extends BlockContainer {
@@ -21,7 +24,14 @@ public class BlockNitorColour extends BlockContainer {
 		super(Material.cloth);
 		this.setBlockName("nitorColour");
 		this.setBlockBounds(0.3F, 0.3F, 0.3F, 0.7F, 0.7F, 0.7F);
+		this.setHardness(0F);
 	}
+	
+	@Override
+	 public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
+    {
+        return null;
+    }
 
 	@Override
 	public boolean hasTileEntity()
@@ -56,28 +66,13 @@ public class BlockNitorColour extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) 
 	{
-		TileColouredNitor te = new TileColouredNitor();
-		te.setColour(1);
 		return new TileColouredNitor();
 	}
 
-	@Override
-	public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int meta, float a, float b, float c)
-	{
-		ItemStack held = player.getCurrentEquippedItem();
-		TileColouredNitor te = (TileColouredNitor) world.getTileEntity(x,y,z);
-		if (held != null && held.getItem() == Items.dye)
-		{
-			if (held.getItemDamage() == 1) //Red
-			{
-				te.setColour(1);
-				held.stackSize--;
-				
-				return true;
-			}
 
-		}
-		return false;
+	@Override
+	public int quantityDropped(int meta, int fortune, Random random) {
+		return 0;
 	}
 
 }

@@ -34,3 +34,6 @@ item.focus.cost=Vis per cast
 item.focusColoured.name=Wand Focus: Coloured Light
 item.focusColoured.currentcolour=Current Colour
 tile.nitorColour.name=Iridescent Nitor
+tc.research_name.insane_IlluminatedBowscolouredFocus=Wand Focus: Coloured Light
+tc.research_text.insane_IlluminatedBowscolouredFocus=Colour for the masses!
+tc.focusColoured.descriptionPage=Having had a taste at magical light, you delve deeper into the realm of possibilities.<BR><BR>Looking over Nitor, you see two issues. Firstly, it's a pain to make just for a bit of light. Secondly, it's a bit, well, orange.<BR><BR>After a lot of burnt hands and an evening of hard work, you manage to conjure some magical Nitor out of your wand. You can even change the colour with just a little bit of dye right there in your inventory!<BR>Unfortunately, Iridescent Nitor no longer acts as a heat source, nor can it be picked up, but these are small prices to pay.
