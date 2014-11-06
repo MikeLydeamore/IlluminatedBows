@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -29,6 +30,13 @@ public class TileIllumination extends TileEntity
     public void addSide(int side)
     {
         this.sides.add(side);
+    }
+    
+    public boolean removeSide(int side)
+    {
+    	this.sides.remove(side);
+    	this.sides.remove(side+6);
+    	return this.sides.isEmpty();
     }
 
     @Override

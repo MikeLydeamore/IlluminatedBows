@@ -13,6 +13,7 @@ public class IlluminatedItems {
 	public static Item illuminatedStick;
 	public static Item inertBow;
 	public static Item inertArrow;
+	public static Item illuminationCleanser;
 	
 	public static void preInit()
 	{
@@ -32,6 +33,9 @@ public class IlluminatedItems {
 
 		inertArrow = new ItemInertArrow();
 		GameRegistry.registerItem(inertArrow, "inertArrow");
+		
+		illuminationCleanser = new ItemIlluminationCleanser();
+		GameRegistry.registerItem(illuminationCleanser, "illuminationCleanser");
 	}
 
 }

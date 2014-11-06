@@ -1,16 +1,22 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
 import java.util.List;
+import java.util.Random;
 
 import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.tile.TileColouredNitor;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.api.wands.IWandFocus;
+import thaumcraft.common.config.Config;
 import thaumcraft.common.items.wands.ItemWandCasting;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -22,13 +28,20 @@ import net.minecraft.world.World;
 
 public class ItemFocusColoured extends Item implements IWandFocus {
 
-	private AspectList visCost = new AspectList().add(Aspect.FIRE, 100).add(Aspect.EARTH, 100);
+	private static Random rand = new Random();
+	private AspectList visCost = new AspectList().add(Aspect.FIRE, 250).add(Aspect.EARTH, 250);
 
 	public ItemFocusColoured()
 	{
 		super();
 		this.setUnlocalizedName("focusColoured");
 		this.setMaxStackSize(1);
+	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerIcons(IIconRegister par1IconRegister) {
+		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_coloured");
 	}
 	
 	@Override
@@ -40,17 +53,19 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 		else
 			tag = new NBTTagCompound();
 		
-		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": "+tag.getInteger(IlluminatedBows.MODID+"colour"));
+		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": "+StatCollector.translateToLocal("colour."+tag.getInteger(IlluminatedBows.MODID+"colour")));
 		list.add(StatCollector.translateToLocal("item.focus.cost"));
 		for (Aspect aspect : visCost.getAspectsSorted()) {
 			float amount = visCost.getAmount(aspect) / 100.0F;
 			list.add(" " + '\u00a7' + aspect.getChatcolor() + aspect.getName() + '\u00a7' + "r x " + amount);
 		}
+		list.add("");
+		list.add(StatCollector.translateToLocal("colour.shapelesscraft"));
 	}
 	
 	@Override
 	public int getFocusColor() {
-		return 0;
+		return rand.nextInt()  ;
 	}
 
 	@Override
@@ -170,7 +185,12 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 
 	@Override
 	public boolean acceptsEnchant(int id) {
-		return false;
+		return id==Config.enchFrugal.effectId;
+	}
+	
+	@Override
+	public boolean isItemTool(ItemStack stack) {
+		return true;
 	}
 
 }

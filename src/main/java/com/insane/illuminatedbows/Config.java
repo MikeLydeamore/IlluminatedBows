@@ -10,6 +10,7 @@ import net.minecraftforge.common.config.Configuration;
 public class Config {
 
     public static boolean bowTakesDamage;
+    public static boolean cleanserTakesDamage;
 
     public static int arrowEnergy;
     public static int bowEnergy;
@@ -57,6 +58,7 @@ public class Config {
                         "Chance that an illumination block will drop glowstone. Additional illuminated sides increase the chance. " +
                         "Math is as follows, the result being the amount of glowstone dropped:\n " +
                         "floor(chance * sideCount) + an additional one if rand.nextFloat() < (chance - floor(chance))\n");
+        cleanserTakesDamage = config.get("General","CleanserTakesDamage",true,"If true, Illumination Cleanser takes damage when used").getBoolean();
         
         //Planks
         glowstonePlankChance = config.get("Planks", "GlowstoneChance", 4, "Chance of getting glowstone dust from Sawmilling Illuminated Planks").getInt(4);

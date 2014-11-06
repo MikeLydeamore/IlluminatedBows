@@ -141,7 +141,10 @@ public class EntityIlluminatedArrow extends EntityArrow {
 	public void onUpdate() {
 		super.onUpdate();
 		//this.rotationYaw=initYaw;
-		this.worldObj.spawnParticle("reddust",this.posX, this.posY, this.posZ, 255, 213, 0);
+		if (magic)
+			this.worldObj.spawnParticle("reddust", this.posX, this.posY, this.posZ, 135, 84, 255);
+		else
+			this.worldObj.spawnParticle("reddust",this.posX, this.posY, this.posZ, 255, 213, 0);
 		try {
 			if (f==null) {
 				f=ReflectionHelper.findField(EntityArrow.class, "inGround", "field_70254_i");

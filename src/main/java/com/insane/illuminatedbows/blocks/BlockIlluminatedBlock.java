@@ -26,6 +26,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 import com.insane.illuminatedbows.Config;
 import com.insane.illuminatedbows.IlluminatedBows;
+import com.insane.illuminatedbows.items.ItemIlluminationCleanser;
 import com.insane.illuminatedbows.tile.TileIllumination;
 
 import cpw.mods.fml.relauncher.Side;
@@ -316,5 +317,24 @@ public class BlockIlluminatedBlock extends Block {
         dropBlockAsItem(world, x, y, z, new ItemStack(Items.glowstone_dust, amnt));
 
         super.onBlockHarvested(world, x, y, z, meta, player);
+    }
+    
+    @Override
+    public boolean onBlockActivated(World world, int x, int y, int z, EntityPlayer player, int side, float hitX, float hitY, float hitZ)
+    {
+    	if (player.getCurrentEquippedItem().getItem() instanceof ItemIlluminationCleanser)
+    	{
+    		TileIllumination te = (TileIllumination) world.getTileEntity(x,y,z);
+    		boolean empty = te.removeSide(side);
+    		world.markBlockForUpdate(x,y,z);
+    		((ItemIlluminationCleanser) player.getCurrentEquippedItem().getItem()).onItemRightClick(player.getCurrentEquippedItem(), world, player);
+    		if (empty)
+    		{
+    			world.setBlock(x, y, z, te.camoBlock, te.blockMetadata, 2);
+    			te.invalidate();
+    		}
+    	}
+    	
+    	return false;
     }
 }
