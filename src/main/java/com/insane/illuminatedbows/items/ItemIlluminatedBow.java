@@ -112,7 +112,6 @@ public class ItemIlluminatedBow extends ItemBow {
                 f = 1.0F;
             }
             EntityIlluminatedArrow arrow = new EntityIlluminatedArrow(par2World, par3EntityPlayer, f*2.0F);
-            arrow.setDamage(0);
             arrow.setBlockToSet(IlluminatedBlocks.illuminatedBlock);
             par2World.playSoundAtEntity(par3EntityPlayer, "random.bow", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + f * 0.5F);
             if (Config.bowTakesDamage)
