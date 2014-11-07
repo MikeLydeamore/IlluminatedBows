@@ -329,10 +329,8 @@ public class BlockIlluminatedBlock extends Block {
     		world.markBlockForUpdate(x,y,z);
     		((ItemIlluminationCleanser) player.getCurrentEquippedItem().getItem()).onItemRightClick(player.getCurrentEquippedItem(), world, player);
     		if (empty)
-    		{
     			world.setBlock(x, y, z, te.camoBlock, te.blockMetadata, 2);
-    			te.invalidate();
-    		}
+
     	}
     	
     	return false;
