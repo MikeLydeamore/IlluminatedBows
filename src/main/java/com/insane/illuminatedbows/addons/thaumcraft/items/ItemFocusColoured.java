@@ -29,11 +29,7 @@ import net.minecraft.world.World;
 
 public class ItemFocusColoured extends Item implements IWandFocus {
 
-	private static Random rand = new Random();
 	private AspectList visCost = new AspectList().add(Aspect.FIRE, 250).add(Aspect.EARTH, 250);
-	private static int r=0, g=0, b=0;
-	private static boolean rFlag=false, gFlag=false, bFlag=false;
-	private int incrementer=1;
 	private Color focusColor;
 	private float hue=0;
 
