@@ -1,5 +1,6 @@
 package com.insane.illuminatedbows.addons.thaumcraft.items;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +31,11 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 
 	private static Random rand = new Random();
 	private AspectList visCost = new AspectList().add(Aspect.FIRE, 250).add(Aspect.EARTH, 250);
+	private static int r=0, g=0, b=0;
+	private static boolean rFlag=false, gFlag=false, bFlag=false;
+	private int incrementer=1;
+	private Color focusColor;
+	private float hue=0;
 
 	public ItemFocusColoured()
 	{
@@ -37,13 +43,13 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 		this.setUnlocalizedName("focusColoured");
 		this.setMaxStackSize(1);
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_coloured");
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
 	{
@@ -52,7 +58,7 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 			tag = stack.getTagCompound();
 		else
 			tag = new NBTTagCompound();
-		
+
 		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": "+StatCollector.translateToLocal("colour."+tag.getInteger(IlluminatedBows.MODID+"colour")));
 		list.add(StatCollector.translateToLocal("item.focus.cost"));
 		for (Aspect aspect : visCost.getAspectsSorted()) {
@@ -62,11 +68,15 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 		list.add("");
 		list.add(StatCollector.translateToLocal("colour.shapelesscraft"));
 	}
-	
+
 	@Override
 	public int getFocusColor() {
-		return rand.nextInt()  ;
+		focusColor = Color.getHSBColor(hue, 1, 1);
+		hue+=0.001;
+		
+		return focusColor.getRGB();
 	}
+
 
 	@Override
 	public IIcon getFocusDepthLayerIcon() {
@@ -137,9 +147,9 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 					tag = focusStack.getTagCompound();
 				else
 					tag = new NBTTagCompound();
-				
-				
-				
+
+
+
 				world.setBlock(x, y, z, TCBlocks.nitorColour);
 				TileColouredNitor te = (TileColouredNitor) world.getTileEntity(x, y, z);
 				te.setColour(getColour(focusStack));
@@ -168,10 +178,10 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 			tag=stack.getTagCompound();
 		else
 			tag = new NBTTagCompound();
-		
+
 		return tag.getInteger(IlluminatedBows.MODID+"colour");
 	}
-	
+
 	@Override
 	public String getSortingHelper(ItemStack itemstack) {
 		return "CL0"+getColour(itemstack);
@@ -187,7 +197,7 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	public boolean acceptsEnchant(int id) {
 		return id==Config.enchFrugal.effectId;
 	}
-	
+
 	@Override
 	public boolean isItemTool(ItemStack stack) {
 		return true;
