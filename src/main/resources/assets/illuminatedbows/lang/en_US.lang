@@ -3,6 +3,7 @@ item.inertBow.name=Inert Bow
 item.illuminatedArrow.name=Illuminating Arrow
 item.inertArrow.name=Inert Arrow
 item.illuminationCleanser.name=Illumination Cleanser
+item.inventoryManager.name=Inventory Manager
 item.illuminatedStick.name=Illuminated Stick
 tile.illuminatedBlock.name=Illumination
 tile.illuminatedBlock.broken.name=Illumination
