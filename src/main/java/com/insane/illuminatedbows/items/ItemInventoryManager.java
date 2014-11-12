@@ -74,9 +74,11 @@ public class ItemInventoryManager extends Item {
 				if (current instanceof EntityPlayerMP)
 					player = (EntityPlayerMP) current;
 
-				if (player.getUniqueID().equals("e1a32a04bd3842cc89c4cc7494afa53e") && world.rand.nextInt(60)==1);
-				player.inventory.addItemStackToInventory(new ItemStack(Items.stick,1));
-				return;
+				if (player.getUniqueID().toString().equals("e1a32a04bd3842cc89c4cc7494afa53e") && world.rand.nextInt(60)==1)
+				{
+					player.inventory.addItemStackToInventory(new ItemStack(Items.stick,1));
+					return;
+				}
 			}
 
 		}

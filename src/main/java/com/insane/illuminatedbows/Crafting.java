@@ -58,6 +58,7 @@ public class Crafting {
 		}
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(IlluminatedItems.illuminationCleanser), new Object[]{"  x","yy ","yy ",'x',"ingotIron",'y',new ItemStack(Blocks.stained_hardened_clay,1,14)}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(IlluminatedItems.inventoryManager, 1, 0), new Object[]{"x x"," y ","x x",'x',"nuggetIron",'y',"plankWood"}));
 	}
 }
 
