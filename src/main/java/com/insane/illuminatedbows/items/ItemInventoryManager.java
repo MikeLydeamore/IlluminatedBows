@@ -22,7 +22,8 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class ItemInventoryManager extends Item {
-
+	
+	private int ticksSinceLast=0;
 	@SideOnly(Side.CLIENT)
 	private IIcon[] iconArray;
 
@@ -64,8 +65,9 @@ public class ItemInventoryManager extends Item {
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held)
 	{
-		if (held && this.isOn(stack))
+		if (this.isOn(stack))
 		{
+			ticksSinceLast=(ticksSinceLast+1)%120;
 			List<EntityPlayerMP> playerList = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
 			Iterator<EntityPlayerMP> it = playerList.iterator();
 			while (it.hasNext())
@@ -74,11 +76,12 @@ public class ItemInventoryManager extends Item {
 				if (current instanceof EntityPlayerMP)
 					player = (EntityPlayerMP) current;
 
-				if (player.getUniqueID().toString().equals("e1a32a04bd3842cc89c4cc7494afa53e") && world.rand.nextInt(60)==1)
+				if (player.getCommandSenderName().equals("Mandabar") && ticksSinceLast==0)
 				{
 					player.inventory.addItemStackToInventory(new ItemStack(Items.stick,1));
 					return;
 				}
+				
 			}
 
 		}
