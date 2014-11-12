@@ -7,6 +7,7 @@ import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import com.insane.illuminatedbows.blocks.IlluminatedBlocks;
 import com.insane.illuminatedbows.items.IlluminatedItems;
@@ -55,6 +56,8 @@ public class Crafting {
 			GameRegistry.addRecipe(new ItemStack(IlluminatedItems.illuminatedBow), new Object[] {"xxx","xyx","xxx",'x',Items.glowstone_dust,'y',IlluminatedItems.inertBow});
 			GameRegistry.addRecipe(new ItemStack(IlluminatedBlocks.illuminatedSapling), new Object[] {"x x","xyx","x x",'x',Items.glowstone_dust,'y',Blocks.sapling});
 		}
+		
+		GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(IlluminatedItems.illuminationCleanser), new Object[]{"  x","yy ","yy ",'x',"ingotIron",'y',new ItemStack(Blocks.stained_hardened_clay,1,14)}));
 	}
 }
 

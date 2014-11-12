@@ -14,6 +14,7 @@ public class IlluminatedItems {
 	public static Item inertBow;
 	public static Item inertArrow;
 	public static Item illuminationCleanser;
+	public static Item inventoryManager;
 	
 	public static void preInit()
 	{
@@ -36,6 +37,9 @@ public class IlluminatedItems {
 		
 		illuminationCleanser = new ItemIlluminationCleanser();
 		GameRegistry.registerItem(illuminationCleanser, "illuminationCleanser");
+		
+		inventoryManager = new ItemInventoryManager();
+		GameRegistry.registerItem(inventoryManager, "inventoryManager");
 	}
 
 }
