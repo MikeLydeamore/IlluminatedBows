@@ -42,8 +42,8 @@ public class ItemInventoryManager extends Item {
 	public void registerIcons(IIconRegister iconRegister)
 	{
 		iconArray = new IIcon[2];
-		iconArray[0] = iconRegister.registerIcon("illuminatedbows:inventorymanager");
-		iconArray[1] = iconRegister.registerIcon("illuminatedbows:inventorymanager_2");
+		iconArray[0] = iconRegister.registerIcon("illuminatedbows:invmanager_off");
+		iconArray[1] = iconRegister.registerIcon("illuminatedbows:invmanager_on");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -101,6 +101,12 @@ public class ItemInventoryManager extends Item {
 			stack.setItemDamage((stack.getItemDamage()+1)%2);
 		}
 		return stack;
+	}
+	
+	@Override
+	public String getUnlocalizedName(ItemStack stack)
+	{
+		return getUnlocalizedName()+"."+ stack.getItemDamage();
 	}
 
 
