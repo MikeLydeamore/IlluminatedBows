@@ -38,6 +38,12 @@ public class ItemFocusIlluminating extends ItemFocusBasic {
 	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_illuminating");
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IIcon getIconFromDamage(int par1) {
+		return this.itemIcon;
+	}
 
 	@Override
 	public int getFocusColor(ItemStack focusStack) {
