@@ -22,35 +22,29 @@ public class EntityIlluminatedArrow extends EntityArrow {
 	public float strength;
 	private static Field f;
 	public boolean blockSpawned;
-	private Block blockToSpawn;
 	public boolean deadOnLand=false;
 	public boolean gravity=true;
-	private float initYaw;
 	public boolean magic;
 
 	public EntityIlluminatedArrow(World par1World) {
 		super(par1World);
 		blockSpawned=false;
-		initYaw = this.rotationYaw;
 	}
 
 	public EntityIlluminatedArrow(World par1World, EntityLivingBase par3EntityPlayer, EntityLivingBase par4EntityPlayer, float j, float k) {
 		super(par1World, par3EntityPlayer, par4EntityPlayer, j, k);
 		this.strength = j;
 		blockSpawned=false;
-		initYaw = this.rotationYaw;
 	}
 
 	public EntityIlluminatedArrow(World par1World, double par2, double par4, double par6) {
 		super(par1World, par2, par4, par6);
 		blockSpawned=false;
-		initYaw = this.rotationYaw;
 	}
 
 	public EntityIlluminatedArrow(World par1World, EntityLivingBase par2, float par3) {
 		super(par1World, par2, par3);
 		this.strength=par3;
-		initYaw = this.rotationYaw;
 	}
 
 	protected void setIllumination(MovingObjectPosition par1MovingObjectPosition) {
@@ -76,7 +70,7 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
                 Block block = worldObj.getBlock(x, y, z);
                 
-                if ((block.getRenderType() == 0 || block.isOpaqueCube() || block.isNormalCube()) && worldObj.getTileEntity(x, y, z) == null)
+                if ((block.getRenderType() == 0 || block.isOpaqueCube() || block.isNormalCube()) && worldObj.getTileEntity(x, y, z) == null && block != Blocks.crafting_table)
                 {
                     int blockMeta = worldObj.getBlockMetadata(x, y, z);
                     this.worldObj.setBlock(x, y, z, IlluminatedBlocks.illuminatedBlock, blockMeta, 3);
@@ -111,7 +105,6 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
 	public void setBlockToSet(Block block)
 	{
-		blockToSpawn = block;
 	}
 
 	public void setDeadOnLand(boolean status)
@@ -131,9 +124,14 @@ public class EntityIlluminatedArrow extends EntityArrow {
 
 
 	public boolean canPlaceBlockAt(World world, int x, int y, int z) {
+		if (world.getBlock(x, y, z) == Blocks.crafting_table)
+		{
+			System.out.println("TABLE");
+			return false;
+		}
 		return world.isSideSolid(x,y,z, ForgeDirection.SOUTH) || world.isSideSolid(x,y,z, ForgeDirection.EAST) ||
 				world.isSideSolid(x,y,z, ForgeDirection.WEST) || world.isSideSolid(x,y,z, ForgeDirection.NORTH) ||
-				world.doesBlockHaveSolidTopSurface(world, x, y, z) || (world.getBlock(x,y,z) == Blocks.leaves) ||
+				World.doesBlockHaveSolidTopSurface(world, x, y, z) || (world.getBlock(x,y,z) == Blocks.leaves) ||
 				(world.getBlock(x,y,z) == Blocks.glass);
 	}
 

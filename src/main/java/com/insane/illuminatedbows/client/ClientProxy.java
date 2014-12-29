@@ -1,5 +1,7 @@
 package com.insane.illuminatedbows.client;
 
+import org.lwjgl.input.Keyboard;
+
 import thaumcraft.client.fx.ParticleEngine;
 import thaumcraft.client.fx.particles.FXWisp;
 import net.minecraft.item.ItemStack;
@@ -44,5 +46,13 @@ public class ClientProxy extends CommonProxy
     	ef.shrink = shrink;
     	
     	ParticleEngine.instance.addEffect(world,ef);
+    }
+    
+    public void inventoryRightClick(ItemStack stack, World world)
+    {
+    	if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)|| Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) && !world.isRemote)
+		{
+			stack.setItemDamage((stack.getItemDamage()+1)%2);
+		}
     }
 }

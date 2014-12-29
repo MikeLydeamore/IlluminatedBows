@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.insane.illuminatedbows.Config;
-import com.insane.illuminatedbows.IlluminatedBows;
-
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -13,6 +11,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSapling;
+import net.minecraft.block.IGrowable;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -21,7 +20,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 
-public class BlockIlluminatedSapling extends BlockSapling {
+public class BlockIlluminatedSapling extends BlockSapling implements IGrowable{
 	
 	private Random boneRand = new Random();
 	public BlockIlluminatedSapling() {
@@ -34,7 +33,8 @@ public class BlockIlluminatedSapling extends BlockSapling {
         this.setBlockName("illuminatedSapling");
 	}
 
-    @SideOnly(Side.CLIENT)
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	@SideOnly(Side.CLIENT)
     @Override
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
         par3List.add(new ItemStack(par1, 1, 0));
@@ -140,6 +140,19 @@ public class BlockIlluminatedSapling extends BlockSapling {
 				
 			}
 		}
+	}
+	
+	@Override
+	public boolean func_149851_a(World world, int x, int y, int z, boolean isClient)
+	{
+		this.updateTick(world, x, y, z, world.rand);
+		return super.func_149851_a(world, x, y, z, isClient);
+	}
+	
+	@Override
+	public void func_149853_b(World world, Random rand, int x, int y, int z)
+	{
+		this.updateTick(world, x, y, z, rand);
 	}
 
 }

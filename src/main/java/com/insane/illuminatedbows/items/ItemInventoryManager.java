@@ -3,8 +3,6 @@ package com.insane.illuminatedbows.items;
 import java.util.Iterator;
 import java.util.List;
 
-import org.lwjgl.input.Keyboard;
-
 import com.insane.illuminatedbows.IlluminatedBows;
 
 import cpw.mods.fml.relauncher.Side;
@@ -54,7 +52,7 @@ public class ItemInventoryManager extends Item {
 	}
 
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
 	public void getSubItems(Item item, CreativeTabs tab, List list)
 	{
@@ -62,10 +60,11 @@ public class ItemInventoryManager extends Item {
 		list.add(new ItemStack(item, 1, 1));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onUpdate(ItemStack stack, World world, Entity entity, int slot, boolean held)
 	{
-		if (this.isOn(stack))
+		if (this.isOn(stack) && !world.isRemote)
 		{
 			ticksSinceLast=(ticksSinceLast+1)%120;
 			List<EntityPlayerMP> playerList = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
@@ -96,10 +95,8 @@ public class ItemInventoryManager extends Item {
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player)
 	{
-		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)|| Keyboard.isKeyDown(Keyboard.KEY_RSHIFT) && !world.isRemote)
-		{
-			stack.setItemDamage((stack.getItemDamage()+1)%2);
-		}
+		IlluminatedBows.proxy.inventoryRightClick(stack, world);
+		
 		return stack;
 	}
 	

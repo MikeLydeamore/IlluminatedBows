@@ -4,31 +4,25 @@ import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.EnumRarity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.event.entity.player.ArrowLooseEvent;
 import net.minecraftforge.event.entity.player.ArrowNockEvent;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.wands.IWandFocus;
-import thaumcraft.common.config.Config;
-
+import thaumcraft.api.wands.FocusUpgradeType;
+import thaumcraft.api.wands.ItemFocusBasic;
 import com.insane.illuminatedbows.EntityIlluminatedArrow;
-import com.insane.illuminatedbows.items.IlluminatedItems;
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class ItemFocusIlluminating extends Item implements IWandFocus {
+public class ItemFocusIlluminating extends ItemFocusBasic {
 
 	public static AspectList visCost = new AspectList().add(Aspect.AIR, (int)(100*com.insane.illuminatedbows.Config.illuminatingFocusAerCost)).add(Aspect.FIRE, (int)(100*com.insane.illuminatedbows.Config.illuminatingFocusFireCost));
 
@@ -46,7 +40,7 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	}
 
 	@Override
-	public int getFocusColor() {
+	public int getFocusColor(ItemStack focusStack) {
 		return 0xFFFF00;
 	}
 
@@ -57,31 +51,32 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	}
 
 	@Override
-	public IIcon getFocusDepthLayerIcon() {
+	public IIcon getFocusDepthLayerIcon(ItemStack stack) {
 		return null;
 	}
 
 	@Override
-	public IIcon getOrnament() {
+	public IIcon getOrnament(ItemStack stack) {
 		return null;
 	}
 
 	@Override
-	public WandFocusAnimation getAnimation() {
+	public WandFocusAnimation getAnimation(ItemStack stack) {
 		return WandFocusAnimation.CHARGE;
 	}
 
 
 	@Override
-	public AspectList getVisCost() {
+	public AspectList getVisCost(ItemStack stack) {
 		return visCost.copy();
 	}
 
 	@Override
-	public boolean isVisCostPerTick() {
+	public boolean isVisCostPerTick(ItemStack stack) {
 		return false;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
 	{
@@ -170,10 +165,6 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 		return false;
 	}
 
-	@Override
-	public boolean acceptsEnchant(int id) {
-		return id==Config.enchFrugal.effectId;
-	}
 
 	@Override
 	public int getItemEnchantability() {
@@ -183,6 +174,15 @@ public class ItemFocusIlluminating extends Item implements IWandFocus {
 	@Override
 	public boolean isItemTool(ItemStack stack) {
 		return true;
+	}
+
+
+
+	@Override
+	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack,
+			int rank) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

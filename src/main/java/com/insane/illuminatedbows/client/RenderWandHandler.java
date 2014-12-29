@@ -11,11 +11,12 @@ import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.Timer;
 import net.minecraftforge.client.IItemRenderer;
-import thaumcraft.api.wands.IWandFocus;
+import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 
 import com.insane.illuminatedbows.addons.thaumcraft.items.ItemFocusIlluminating;
@@ -55,7 +56,10 @@ public class RenderWandHandler implements IItemRenderer
         wandRenderer.renderItem(type, item, data);
 
         ItemWandCasting wand = (ItemWandCasting) item.getItem();
-        IWandFocus focus = wand.getFocus(item);
+        ItemStack focusStack = wand.getFocusItem(item);
+        if (focusStack == null)
+        	return;
+        ItemFocusBasic focus = (ItemFocusBasic) wand.getFocusItem(item).getItem();
         if (focus instanceof ItemFocusIlluminating && (type == ItemRenderType.EQUIPPED || type == ItemRenderType.EQUIPPED_FIRST_PERSON))
         {
             Tessellator tessellator = Tessellator.instance;
@@ -90,14 +94,14 @@ public class RenderWandHandler implements IItemRenderer
                   glRotatef(10.0F, 0.0F, 0.0F, 1.0F);
                 }
                 glRotatef(60.0F * (t / 3.0F), -1.0F, 0.0F, 0.0F);
-                if ((wand.animation == IWandFocus.WandFocusAnimation.WAVE) || ((wand.getFocus(item) != null) && (wand.getFocus(item).getAnimation() == IWandFocus.WandFocusAnimation.WAVE)))
+                if ((wand.animation == ItemFocusBasic.WandFocusAnimation.WAVE) || ((wand.getFocus(item) != null) && (wand.getFocus(item).getAnimation(item) == ItemFocusBasic.WandFocusAnimation.WAVE)))
                 {
                   float wave = MathHelper.sin((((EntityPlayer)entity).getItemInUseDuration() + partialTicks) / 10.0F) * 10.0F;
                   glRotatef(wave, 0.0F, 0.0F, 1.0F);
                   wave = MathHelper.sin((((EntityPlayer)entity).getItemInUseDuration() + partialTicks) / 15.0F) * 10.0F;
                   glRotatef(wave, 1.0F, 0.0F, 0.0F);
                 }
-                else if ((wand.getFocus(item) != null) && (wand.getFocus(item).getAnimation() == IWandFocus.WandFocusAnimation.CHARGE))
+                else if ((wand.getFocus(item) != null) && (wand.getFocus(item).getAnimation(item) == ItemFocusBasic.WandFocusAnimation.CHARGE))
                 {
                   float wave = MathHelper.sin((((EntityPlayer)entity).getItemInUseDuration() + partialTicks) / 0.8F) * 1.0F;
                   glRotatef(wave, 0.0F, 0.0F, 1.0F);

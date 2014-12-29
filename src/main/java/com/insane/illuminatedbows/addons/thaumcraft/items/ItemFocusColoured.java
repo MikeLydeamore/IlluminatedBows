@@ -2,8 +2,6 @@ package com.insane.illuminatedbows.addons.thaumcraft.items;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Random;
-
 import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.tile.TileColouredNitor;
@@ -14,12 +12,11 @@ import cpw.mods.fml.relauncher.SideOnly;
 import thaumcraft.api.ThaumcraftApiHelper;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import thaumcraft.api.wands.IWandFocus;
-import thaumcraft.common.config.Config;
+import thaumcraft.api.wands.FocusUpgradeType;
+import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -27,7 +24,7 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 
-public class ItemFocusColoured extends Item implements IWandFocus {
+public class ItemFocusColoured extends ItemFocusBasic {
 
 	private AspectList visCost = new AspectList().add(Aspect.FIRE, 250).add(Aspect.EARTH, 250);
 	private Color focusColor;
@@ -45,7 +42,14 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_coloured");
 	}
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	public IIcon getIconFromDamage(int par1) {
+		return this.itemIcon;
+	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
 	{
@@ -66,7 +70,7 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	}
 
 	@Override
-	public int getFocusColor() {
+	public int getFocusColor(ItemStack focusStack) {
 		focusColor = Color.getHSBColor(hue, 1, 1);
 		hue+=0.001;
 		
@@ -75,27 +79,27 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 
 
 	@Override
-	public IIcon getFocusDepthLayerIcon() {
+	public IIcon getFocusDepthLayerIcon(ItemStack focusStack) {
 		return null;
 	}
 
 	@Override
-	public IIcon getOrnament() {
+	public IIcon getOrnament(ItemStack focusStack) {
 		return null;
 	}
 
 	@Override
-	public WandFocusAnimation getAnimation() {
+	public WandFocusAnimation getAnimation(ItemStack focusStack) {
 		return WandFocusAnimation.CHARGE;
 	}
 
 	@Override
-	public AspectList getVisCost() {
+	public AspectList getVisCost(ItemStack focusStack) {
 		return visCost.copy();
 	}
 
 	@Override
-	public boolean isVisCostPerTick() {
+	public boolean isVisCostPerTick(ItemStack focusStack) {
 		return false;
 	}
 
@@ -138,13 +142,6 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 			if (world.getBlock(x, y, z).isReplaceable(world, x, y, z) || world.isAirBlock(x, y, z))
 			{
 				ItemStack focusStack = ((ItemWandCasting) itemstack.getItem()).getFocusItem(itemstack);
-				NBTTagCompound tag;
-				if (focusStack.hasTagCompound())
-					tag = focusStack.getTagCompound();
-				else
-					tag = new NBTTagCompound();
-
-
 
 				world.setBlock(x, y, z, TCBlocks.nitorColour);
 				TileColouredNitor te = (TileColouredNitor) world.getTileEntity(x, y, z);
@@ -190,13 +187,16 @@ public class ItemFocusColoured extends Item implements IWandFocus {
 	}
 
 	@Override
-	public boolean acceptsEnchant(int id) {
-		return id==Config.enchFrugal.effectId;
-	}
-
-	@Override
 	public boolean isItemTool(ItemStack stack) {
 		return true;
+	}
+
+
+	@Override
+	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack,
+			int rank) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

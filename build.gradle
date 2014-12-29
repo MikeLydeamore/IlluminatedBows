@@ -22,7 +22,7 @@ group= "com.insane.illuminatedbows" // http://maven.apache.org/guides/mini/guide
 archivesBaseName = "IlluminatedBows-1.7.10"
 
 minecraft {
-    version = "1.7.10-10.13.0.1208"
+    version = "1.7.10-10.13.2.1277"
     assetDir = "eclipse/assets"
 }
 
