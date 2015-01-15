@@ -17,6 +17,7 @@ import thaumcraft.api.wands.ItemFocusBasic;
 import thaumcraft.common.items.wands.ItemWandCasting;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -26,7 +27,9 @@ import net.minecraft.world.World;
 
 public class ItemFocusColoured extends ItemFocusBasic {
 
-	private AspectList visCost = new AspectList().add(Aspect.FIRE, 250).add(Aspect.EARTH, 250);
+	private int fireCost = 250;
+	private int earthCost = 250;
+	private AspectList visCost = new AspectList().add(Aspect.FIRE, fireCost).add(Aspect.EARTH, earthCost);
 	private Color focusColor;
 	private float hue=0;
 
@@ -42,11 +45,18 @@ public class ItemFocusColoured extends ItemFocusBasic {
 	public void registerIcons(IIconRegister par1IconRegister) {
 		this.itemIcon = par1IconRegister.registerIcon("illuminatedbows:focus_coloured");
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIconFromDamage(int par1) {
 		return this.itemIcon;
+	}
+
+	@Override
+	public int getColorFromItemStack(ItemStack stack, int pass)
+	{
+		int colour = this.getColour(stack);
+		return ItemDye.field_150922_c[colour];	
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -60,12 +70,7 @@ public class ItemFocusColoured extends ItemFocusBasic {
 			tag = new NBTTagCompound();
 
 		list.add(StatCollector.translateToLocal("item.focusColoured.currentcolour")+": "+StatCollector.translateToLocal("colour."+tag.getInteger(IlluminatedBows.MODID+"colour")));
-		list.add(StatCollector.translateToLocal("item.focus.cost"));
-		for (Aspect aspect : visCost.getAspectsSorted()) {
-			float amount = visCost.getAmount(aspect) / 100.0F;
-			list.add(" " + '\u00a7' + aspect.getChatcolor() + aspect.getName() + '\u00a7' + "r x " + amount);
-		}
-		list.add("");
+		super.addInformation(stack, player, list, blah);
 		list.add(StatCollector.translateToLocal("colour.shapelesscraft"));
 	}
 
@@ -73,7 +78,7 @@ public class ItemFocusColoured extends ItemFocusBasic {
 	public int getFocusColor(ItemStack focusStack) {
 		focusColor = Color.getHSBColor(hue, 1, 1);
 		hue+=0.001;
-		
+
 		return focusColor.getRGB();
 	}
 
@@ -94,7 +99,9 @@ public class ItemFocusColoured extends ItemFocusBasic {
 	}
 
 	@Override
-	public AspectList getVisCost(ItemStack focusStack) {
+	public AspectList getVisCost(ItemStack focusStack) 
+	{
+
 		return visCost.copy();
 	}
 
@@ -195,7 +202,9 @@ public class ItemFocusColoured extends ItemFocusBasic {
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack,
 			int rank) {
-		// TODO Auto-generated method stub
+		if (rank < 5)
+			return new FocusUpgradeType[]{FocusUpgradeType.frugal};
+		
 		return null;
 	}
 

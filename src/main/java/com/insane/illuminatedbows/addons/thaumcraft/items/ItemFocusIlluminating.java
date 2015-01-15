@@ -82,7 +82,7 @@ public class ItemFocusIlluminating extends ItemFocusBasic {
 		return false;
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	/*@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List list, boolean blah)
 	{
@@ -91,7 +91,7 @@ public class ItemFocusIlluminating extends ItemFocusBasic {
 			float amount = visCost.getAmount(aspect) / 100.0F;
 			list.add(" " + '\u00a7' + aspect.getChatcolor() + aspect.getName() + '\u00a7' + "r x " + amount);
 		}
-	}
+	}*/
 
 	@Override
 	public ItemStack onFocusRightClick(ItemStack itemstack, World world,
@@ -187,7 +187,9 @@ public class ItemFocusIlluminating extends ItemFocusBasic {
 	@Override
 	public FocusUpgradeType[] getPossibleUpgradesByRank(ItemStack focusstack,
 			int rank) {
-		// TODO Auto-generated method stub
+		if (rank < 5)
+			return new FocusUpgradeType[]{FocusUpgradeType.frugal};
+		
 		return null;
 	}
 
