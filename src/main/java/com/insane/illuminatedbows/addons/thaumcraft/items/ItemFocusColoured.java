@@ -56,7 +56,10 @@ public class ItemFocusColoured extends ItemFocusBasic {
 	public int getColorFromItemStack(ItemStack stack, int pass)
 	{
 		int colour = this.getColour(stack);
-		return ItemDye.field_150922_c[colour];	
+		if (colour < 16)
+			return ItemDye.field_150922_c[colour];
+		else
+			return Color.YELLOW.getRGB();
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

@@ -104,6 +104,12 @@ public class TCAddon {
 			GameRegistry.addRecipe(new ShapelessOreRecipe(colourStack, new Object[]{new ItemStack(TCItems.itemFocusColoured, 1, 0), dye}));
 		}
 		
+		ItemStack colourStack = new ItemStack(TCItems.itemFocusColoured, 1, 0);
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setInteger(IlluminatedBows.MODID+"colour", 16);
+		colourStack.setTagCompound(tag);
+		GameRegistry.addShapelessRecipe(colourStack, new Object[]{new ItemStack(TCItems.itemFocusColoured, 1, 0), Items.gunpowder});
+		
 	}
 	
 	public static void postInit()
