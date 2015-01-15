@@ -1,5 +1,7 @@
 package com.insane.illuminatedbows.addons.thaumcraft;
 
+import org.apache.commons.lang3.StringUtils;
+
 import thaumcraft.api.ItemApi;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -13,9 +15,12 @@ import thaumcraft.api.research.ResearchPage;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
@@ -82,7 +87,22 @@ public class TCAddon {
 		pageFocusTwo = new ResearchPage(focusRecipe);
 		pageColouredFocusTwo = new ResearchPage(colouredFocusRecipe);
 
-		CraftingManager.getInstance().getRecipeList().add(new FocusColourCrafting());
+		//CraftingManager.getInstance().getRecipeList().add(new FocusColourCrafting());
+		
+		
+		for (int i=0; i<16; i++)
+		{
+			ItemStack colourStack = new ItemStack(TCItems.itemFocusColoured, 1, 0);
+			NBTTagCompound tag = new NBTTagCompound();
+			tag.setInteger(IlluminatedBows.MODID+"colour", i);
+			colourStack.setTagCompound(tag);
+			String dye;
+			if (i != 7)
+				dye = "dye"+StringUtils.capitalize(ItemDye.field_150923_a[i]);
+			else
+				dye = "dyeLightGray";
+			GameRegistry.addRecipe(new ShapelessOreRecipe(colourStack, new Object[]{new ItemStack(TCItems.itemFocusColoured, 1, 0), dye}));
+		}
 		
 	}
 	
