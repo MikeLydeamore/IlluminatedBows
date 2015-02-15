@@ -12,6 +12,7 @@ import thaumcraft.api.research.ResearchCategories;
 import thaumcraft.api.research.ResearchCategoryList;
 import thaumcraft.api.research.ResearchItem;
 import thaumcraft.api.research.ResearchPage;
+import thaumcraft.client.fx.ParticleEngine;
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -20,11 +21,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
 import com.insane.illuminatedbows.IlluminatedBows;
 import com.insane.illuminatedbows.addons.thaumcraft.blocks.TCBlocks;
 import com.insane.illuminatedbows.addons.thaumcraft.items.TCItems;
+import com.insane.illuminatedbows.client.particles.ColourNitorFX;
 import com.insane.illuminatedbows.items.IlluminatedItems;
 
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -129,5 +132,14 @@ public class TCAddon {
 		researchColouredFocus.setParents(colouredFocusParents);
 		researchColouredFocus = researchColouredFocus.setPages(pageColouredFocusOne, pageColouredFocusTwo);
 		ResearchCategories.addResearch(researchColouredFocus);
+	}
+	
+	public static void doParticles(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity, int colour)
+	{
+		ColourNitorFX ef = new ColourNitorFX(world, x, y, z, x2, y2, z2, size, type, shrink, gravity, colour);
+    	ef.setGravity(gravity);
+    	ef.shrink = shrink;
+    	
+    	ParticleEngine.instance.addEffect(world,ef);
 	}
 }

@@ -13,6 +13,7 @@ import net.minecraftforge.client.MinecraftForgeClient;
 import com.insane.illuminatedbows.CommonProxy;
 import com.insane.illuminatedbows.EntityIlluminatedArrow;
 import com.insane.illuminatedbows.IlluminatedBows;
+import com.insane.illuminatedbows.addons.thaumcraft.TCAddon;
 import com.insane.illuminatedbows.client.particles.ColourNitorFX;
 
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -41,11 +42,10 @@ public class ClientProxy extends CommonProxy
     
     public void colourNitorEffects(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity, int colour)
     {
-    	ColourNitorFX ef = new ColourNitorFX(world, x, y, z, x2, y2, z2, size, type, shrink, gravity, colour);
-    	ef.setGravity(gravity);
-    	ef.shrink = shrink;
-    	
-    	ParticleEngine.instance.addEffect(world,ef);
+    	if (Loader.isModLoaded("Thaumcraft"))
+    	{
+    		TCAddon.doParticles(world, x, y, z, x2, y2, z2, size, type, shrink, gravity, colour);
+    	}
     }
     
     public void inventoryRightClick(ItemStack stack, World world)

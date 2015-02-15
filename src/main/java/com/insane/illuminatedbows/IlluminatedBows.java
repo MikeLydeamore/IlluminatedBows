@@ -15,7 +15,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
-@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.7.1", dependencies="after:ThermalExpansion;after:Thaumcraft;after:NotEnoughItems")
+@Mod(modid=IlluminatedBows.MODID, name="IlluminatedBows", version="1.7.1c", dependencies="after:ThermalExpansion;after:Thaumcraft;after:NotEnoughItems")
 public class IlluminatedBows {
 
 	public static final String MODID = "insane_IlluminatedBows";
