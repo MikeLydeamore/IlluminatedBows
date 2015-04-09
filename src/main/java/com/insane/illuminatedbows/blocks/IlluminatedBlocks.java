@@ -37,6 +37,7 @@ public class IlluminatedBlocks {
 	public static Block illuminatedStairs;
 	public static Block illuminatedBlock;
 	public static Block illuminatedSlab;
+	public static Block illuminatedFarmland;
 
 	public IlluminatedBlocks() {}
 
@@ -64,6 +65,9 @@ public class IlluminatedBlocks {
 
 		illuminatedStairs = new BlockIlluminatedStairs(illuminatedPlanks, 0);
 		GameRegistry.registerBlock(illuminatedStairs, "illuminatedStairs");
+		
+		illuminatedFarmland = new BlockIlluminatedFarmland();
+		GameRegistry.registerBlock(illuminatedFarmland, "illuminatedFarmland");
 
 
 	}

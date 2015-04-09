@@ -30,7 +30,10 @@ import com.insane.illuminatedbows.addons.thaumcraft.items.TCItems;
 import com.insane.illuminatedbows.client.particles.ColourNitorFX;
 import com.insane.illuminatedbows.items.IlluminatedItems;
 
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class TCAddon {
 	
@@ -134,6 +137,7 @@ public class TCAddon {
 		ResearchCategories.addResearch(researchColouredFocus);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	public static void doParticles(World world, double x, double y, double z, double x2, double y2, double z2, float size, int type, boolean shrink, float gravity, int colour)
 	{
 		ColourNitorFX ef = new ColourNitorFX(world, x, y, z, x2, y2, z2, size, type, shrink, gravity, colour);
